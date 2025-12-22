@@ -4,16 +4,16 @@ A condensed field guide for engineers who need to ship cinematic, high-trust web
 
 ## How to Navigate This Research
 
-### Core Playbook
-1. [1. Layered Foundations](./01-foundations.md) — design tokens, atmospheric backgrounds, and the primitives every other pattern relies on.
-2. [2. Surfaces, Depth, and Hierarchy](./02-surfaces.md) — glassmorphism recipes, elevation cues, and status-aware micro-components.
-3. [3. Layout System](./03-layout.md) — container primitives, utility philosophy, and fluid responsive strategy.
-4. [4. Motion & Feedback](./04-motion.md) — scroll-triggered reveals, interaction states, and reduced-motion handling.
-5. [5. Content Modules](./05-content-modules.md) — reusable hero, form, table, and chat shells that slot into any product surface.
-6. [6. Accessibility, Resilience & Tooling](./06-accessibility-resilience-tooling.md) — progressive enhancement, HTMX hydration, and linting/QA safeguards.
-7. [7. Anti-Patterns to Avoid](./07-anti-patterns.md) — red flags that should block a release (inline styles, pointer-blocking overlays, perf regressions, etc.).
-8. [8. Implementation Checklist](./08-checklist.md) — step-by-step audit flow; use it when bringing a screen to parity with the patterns above.
-9. [9. Conclusion](./09-conclusion.md) — why the discipline pays off and how to socialize these standards with stakeholders.
+### Core Playbook (pick any file)
+- [Layered Foundations](./layered-foundations.md) — design tokens, atmospheric backgrounds, and the primitives every other pattern relies on.
+- [Surfaces, Depth, and Hierarchy](./surfaces-depth.md) — glassmorphism recipes, elevation cues, and status-aware micro-components.
+- [Layout System](./layout-system.md) — container primitives, utility philosophy, and fluid responsive strategy.
+- [Motion & Feedback](./motion-feedback.md) — scroll-triggered reveals, interaction states, new native transition APIs, and reduced-motion handling.
+- [Content Modules](./content-modules.md) — reusable hero, form, table, chat, and spatial overlay shells.
+- [Accessibility, Resilience & Tooling](./accessibility-resilience-tooling.md) — progressive enhancement, HTMX hydration, automation/linting safeguards.
+- [Anti-Patterns to Avoid](./anti-patterns.md) — release-blocking issues (inline styles, pointer-blocking overlays, perf regressions, etc.).
+- [Implementation Checklist](./implementation-checklist.md) — step-by-step audit flow; run it when bringing a surface up to spec.
+- [Conclusion](./conclusion.md) — why the discipline pays off and how to socialize these standards with stakeholders.
 
 ### Supplemental Research Files
 - [glassmorphism-research.md](./glassmorphism-research.md) — deep dive on atmospheric materials, cursor/scroll dynamics, and inspiration pulled from visionOS.
@@ -21,4 +21,4 @@ A condensed field guide for engineers who need to ship cinematic, high-trust web
 - [modern-ui-libraries.md](./modern-ui-libraries.md) — curated tooling list (animation engines, headless UI kits, state libraries, and WebGL helpers) for when you need production-ready building blocks.
 - [ui-anti-patterns-and-mistakes.md](./ui-anti-patterns-and-mistakes.md) — broader industry anti-pattern catalogue; use it during legacy audits or when onboarding teams who are still shipping pre-token CSS.
 
-Treat `01-09` as the canonical playbook for new work, and lean on the supplemental files when you need extra depth, vendor options, or competitive references.
+Treat these notes as modular—jump into whatever topic you need, and lean on the supplemental files when you want extra depth, vendor options, or competitive references.

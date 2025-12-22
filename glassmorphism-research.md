@@ -1,12 +1,12 @@
 # Research: Ultra-Modern Glassmorphism and Interactive UI
 
-> This appendix extends Section 2 ("Surfaces, Depth, and Hierarchy"). Read [02-surfaces.md](./02-surfaces.md) for the canonical implementation guidelines; use this file when you need deeper experiments, motion-driven variations, or inspiration references that haven't been productionized yet.
+> This appendix extends the “Surfaces, Depth, and Hierarchy” note. Read [surfaces-depth.md](./surfaces-depth.md) for the canonical implementation guidelines; use this file when you need deeper experiments, motion-driven variations, or inspiration references that haven't been productionized yet.
 
 This document summarizes research into modern "glassmorphism" UI techniques, with a focus on creating interactive and dynamic effects inspired by Apple's design language (including visionOS).
 
 ---
 
-## 1. Core Principles of Glassmorphism
+## Core Principles of Glassmorphism
 
 Glassmorphism is a UI trend that creates the effect of frosted glass. Elements appear translucent, blurring the content behind them.
 
@@ -25,11 +25,23 @@ Glassmorphism is a UI trend that creates the effect of frosted glass. Elements a
 
 ---
 
-## 2. Advanced & Interactive Techniques
+## Advanced & Interactive Techniques
 
 This is where glassmorphism becomes truly "ultra-modern." The goal is to make the glass feel dynamic and responsive to user interaction.
 
-### 2.1. Scroll-Based Background Distortion
+### Liquid glass layering
+
+Apple’s “Liquid Glass” direction (visionOS, iOS 18) treats glass panels like living materials: translucent layers shift subtly as context changes, edges glow based on ambient light, and navigation bars feel like they’re floating in space.
+
+**Implementation ideas:**
+- **Layered depth stack:** combine `background: color-mix(in srgb, var(--bg-elevated) 80%, transparent)` with multiple `::before / ::after` gradients whose opacity changes based on scroll or focus state.
+- **Edge highlights:** fake refraction by adding a `mask-image: radial-gradient()` along edges that scales on hover; pair with `filter: drop-shadow()` to simulate light hitting curved glass.
+- **Context-aware blur:** increase `backdrop-filter` blur as surfaces move closer to the viewer (`transform: translateZ()` in 3D scenes or `scale()` for 2.5D), but cap at ~30px to preserve legibility.
+- **Navigation chroma:** apply subtle hue shifts tied to active sections (e.g., `data-section` attribute driving `color-mix()`), so tabs look “lit up” by the content they control.
+
+Keep these effects optional—detect GPU/OS support and fall back to the baseline recipes in `surfaces-depth.md` when reduced motion or low-power mode is enabled.
+
+### Scroll-Based Background Distortion
 
 This technique makes the background blur change as the user scrolls, creating a sense of movement and connection between the UI and the background.
 
@@ -65,7 +77,7 @@ window.addEventListener('scroll', () => {
 });
 ```
 
-### 2.2. Cursor-Based Aurora & Liquid Effects
+### Cursor-Based Aurora & Liquid Effects
 
 This creates a "wow" effect where the glass distorts or lights up as the user moves their cursor over it.
 
@@ -107,7 +119,7 @@ This often requires more advanced techniques, sometimes involving WebGL for perf
 
 For truly advanced "liquid glass" or refractive effects, libraries like `liquid-glass-js` (which uses WebGL) can be explored.
 
-### 2.3. Realistic Edge Highlights
+### Realistic Edge Highlights
 
 To make the glass feel more physical, you can simulate how light catches the edge of a real glass object.
 
@@ -129,7 +141,7 @@ Instead of a simple `border`, use `border-image` with a `linear-gradient`. This 
 
 ---
 
-## 3. Inspiration from Apple's visionOS
+## Inspiration from Apple's visionOS
 
 Apple's visionOS takes glassmorphism into a 3D, spatial context. We can draw several key ideas from it for web UI.
 
@@ -143,7 +155,7 @@ Apple's visionOS takes glassmorphism into a 3D, spatial context. We can draw sev
 
 ---
 
-## 4. Summary & Resources
+## Summary & Resources
 
 By combining the foundational principles of glassmorphism with interactive JavaScript techniques and spatial concepts from visionOS, we can create truly modern, engaging, and "glassy" user interfaces. The key is to move beyond static blur and make the glass feel like a dynamic, responsive material.
 
@@ -152,3 +164,4 @@ By combining the foundational principles of glassmorphism with interactive JavaS
 - **CodePen:** Many examples of interactive glass UIs. Search for "glassmorphism" and "backdrop-filter".
 - **Apple's Human Interface Guidelines for visionOS:** Provides the design philosophy behind the spatial interface.
 - **YouTube Tutorials:** Numerous video guides demonstrate these techniques visually.
+- **Composite Global – Top UX Trends 2025:** Highlights the Liquid Glass direction and other depth-driven patterns in modern OSes.

@@ -1,8 +1,8 @@
-## 7. Anti-Patterns to Avoid
+## Anti-Patterns to Avoid
 
 Understanding what NOT to do is as important as understanding best practices. These are the patterns that will bite you in production.
 
-### 7.1. Inline styles, one-off tweaks, and token drift
+### Inline styles, one-off tweaks, and token drift
 
 **Why it hurts:** Inline styles are impossible to audit, theme changes miss them, and token drift creates brand inconsistency. Every `style="margin-top: 10px"` is a snowflake that makes your codebase less maintainable.
 
@@ -33,7 +33,7 @@ Understanding what NOT to do is as important as understanding best practices. Th
 
 **Remedy:** Ban inline styles, lint for `style="`, and add new colors/spacings only through the token system. If you need a new value, create the token first, then consume it.
 
-### 7.2. Outdated layout & tooling techniques
+### Outdated layout & tooling techniques
 
 These relics still appear in legacy code reviews. Replace them before they rot the codebase.
 
@@ -47,7 +47,7 @@ These relics still appear in legacy code reviews. Replace them before they rot t
 
 Also retire deeply nested selectors, magic-number spacing, and projects that omit a CSS reset. Adopt flat, class-based selectors, spacing scales, and a base reset/normalize.
 
-### 7.3. Pointer-blocking pseudo-elements
+### Pointer-blocking pseudo-elements
 
 **Why it hurts:** Glassmorphism overlays that forget `pointer-events: none` block ALL interaction. This is a silent killer—UI looks perfect but nothing works.
 
@@ -69,7 +69,7 @@ Also retire deeply nested selectors, magic-number spacing, and projects that omi
 
 **Remedy:** ALL decorative pseudo-elements must have `pointer-events: none`. No exceptions.
 
-### 7.4. Scroll handlers and animation abuse
+### Scroll handlers and animation abuse
 
 **Why it hurts:** Scroll handlers fire 60+ times per second and force layout calculations. Animating layout/paint properties (`margin`, `width`, `background`) causes stutter, especially atop glass surfaces.
 
@@ -104,7 +104,7 @@ const observer = new IntersectionObserver((entries) => {
 
 **Remedy:** Use IntersectionObserver, animate only `transform`/`opacity`, and consult [csstriggers.com](https://csstriggers.com/) before introducing motion. Ban `transition: all`.
 
-### 7.5. Performance regressions that sneak into launch
+### Performance regressions that sneak into launch
 
 - **Render-blocking resources:** `<script>` in `<head>` without `defer/async` or CSS loaded late.
 - **Unoptimized assets:** Huge bitmaps, missing `srcset`, no lazy-loading.
@@ -114,7 +114,7 @@ const observer = new IntersectionObserver((entries) => {
 
 Treat Lighthouse/perf budgets as blocking checks, not “nice to have.”
 
-### 7.6. Accessibility gaps
+### Accessibility gaps
 
 - **Ignoring `prefers-reduced-motion`:** Triggers nausea/migraines and fails WCAG.
 - **Poor contrast & missing focus states:** Killing readability and keyboard flow (never remove outlines without replacements).
@@ -123,7 +123,7 @@ Treat Lighthouse/perf budgets as blocking checks, not “nice to have.”
 
 **Remedy:** Ship semantic HTML, pair iconography with text, and treat the accessibility tree as part of the UI surface. Listen for runtime changes to `prefers-reduced-motion` so toggles take effect immediately.
 
-### 7.7. UX & product dark patterns
+### UX & product dark patterns
 
 - **Cluttered views:** Trying to show everything at once destroys scannability; use progressive disclosure.
 - **Mystery-meat navigation:** Icons without labels slow users down.
@@ -132,7 +132,7 @@ Treat Lighthouse/perf budgets as blocking checks, not “nice to have.”
 
 Keep the UI honest—prioritize comprehension and ethical flows over gimmicks.
 
-### 7.8. Breakpoint soup
+### Breakpoint soup
 
 **Why it hurts:** Maintenance nightmare. Every layout change requires updating 5+ breakpoints. Fluid design eliminates this.
 

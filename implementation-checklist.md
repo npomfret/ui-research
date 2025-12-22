@@ -1,4 +1,4 @@
-## 8. Implementation Checklist
+## Implementation Checklist
 
 Use this checklist when implementing or auditing a UI built with these patterns:
 

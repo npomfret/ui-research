@@ -2,11 +2,11 @@
 
 This document provides a curated list of modern JavaScript libraries and tools that are highly relevant for building next-generation user interfaces. The focus is on libraries that are performant, provide an excellent developer experience, and enable the creation of the advanced UI patterns we've researched.
 
-> Use this alongside [06-accessibility-resilience-tooling.md](./06-accessibility-resilience-tooling.md): that chapter covers principles, while this appendix points to ecosystem options when you decide to buy vs. build.
+> Use this alongside [accessibility-resilience-tooling.md](./accessibility-resilience-tooling.md): that note covers principles, while this appendix points to ecosystem options when you decide to buy vs. build.
 
 ---
 
-## 1. Animation & Interaction Libraries
+## Animation & Interaction Libraries
 
 Pure CSS is great for simple transitions, but for complex, orchestrated, or physics-based animations, a dedicated library is essential.
 
@@ -22,7 +22,7 @@ Pure CSS is great for simple transitions, but for complex, orchestrated, or phys
 
 ---
 
-## 2. Headless UI Component Libraries
+## Headless UI Component Libraries
 
 "Headless" means the library provides all the logic, state management, and accessibility for a component (like a dialog or a dropdown menu), but **zero styling**. This gives you complete creative control over the appearance while ensuring the component is robust and accessible.
 
@@ -38,7 +38,7 @@ Pure CSS is great for simple transitions, but for complex, orchestrated, or phys
 
 ---
 
-## 3. Lightweight State Management
+## Lightweight State Management
 
 Modern state management is moving away from heavy, boilerplate-heavy solutions towards simpler, more performant, and intuitive libraries.
 
@@ -59,7 +59,7 @@ Modern state management is moving away from heavy, boilerplate-heavy solutions t
 
 ---
 
-## 4. 3D & WebGL Libraries
+## 3D & WebGL Libraries
 
 To create truly immersive and "ultra-modern" UI effects, you'll often need to leverage WebGL. These libraries make it accessible.
 
@@ -77,3 +77,23 @@ To create truly immersive and "ultra-modern" UI effects, you'll often need to le
 - **What it is:** A web-based 3D design tool that lets you create interactive 3D scenes and export them for the web.
 - **Why it's modern:** It's a design-first tool that abstracts away the code. You can create beautiful 3D objects and animations in a visual editor, add simple interactivity (like hover states or click events), and get a link or code snippet to embed directly in your site.
 - **Use for:** Quickly adding polished, interactive 3D elements to a website without writing complex WebGL code. Perfect for marketing sites and product showcases.
+
+---
+
+## Vanilla-first micro stacks
+
+Teams are increasingly skipping heavyweight frameworks in favor of lean, composable libraries—pair these with design tokens + HTMX-style partials to keep bundles tiny:
+
+### Lit
+- **What it is:** A lightweight library for building standards-based web components.
+- **Why it's modern:** Ships fast reactivity with tagged template literals, SSR support, and interoperability across frameworks. Perfect when you need encapsulated widgets inside otherwise server-rendered surfaces.
+
+### Alpine.js
+- **What it is:** A “Tailwind for interactivity”—a sprinkle framework that lets you attach state/behavior directly in markup.
+- **Why it's modern:** Ideal for dashboards powered by HTMX or Phoenix LiveView where you only need minimal client interactivity. Works great with existing utility classes and motion tokens.
+
+### Fancy Components / modern micro-kits
+- **What it is:** A crop of copy-paste component kits built on vanilla JS + CSS Custom Properties.
+- **Why it's modern:** You own the markup/styles, but avoid reinventing complex controls (command palettes, radial menus). Most kits expose design tokens you can wire into this repo’s foundation layer.
+
+Guidance: start with vanilla + these micro libraries, then reach for React/Vue only when you truly need app-scale state. Monitor bundle budgets and prefer ESM imports so tree-shaking kills unused components.

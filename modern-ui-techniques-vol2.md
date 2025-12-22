@@ -1,12 +1,12 @@
 # Modern Web UI Techniques, Vol. 2
 
-This document covers a new set of modern web UI techniques, expanding on our previous research into glassmorphism. Treat it as an R&D notebook for ideas that may graduate into the core playbook ([03-layout.md](./03-layout.md), [04-motion.md](./04-motion.md), [05-content-modules.md](./05-content-modules.md)). Each section below links back to the chapter it extends so you can decide whether to productionize it or leave it as inspiration.
+This document covers a new set of modern web UI techniques, expanding on our previous research into glassmorphism. Treat it as an R&D notebook for ideas that may graduate into the core playbook ([layout-system.md](./layout-system.md), [motion-feedback.md](./motion-feedback.md), [content-modules.md](./content-modules.md)). Each section below links back to the note it extends so you can decide whether to productionize it or leave it as inspiration.
 
 ---
 
-## 1. Bento Grid Layouts
+## Bento Grid Layouts
 
-_Pairs with [03-layout.md](./03-layout.md) (container primitives + responsive strategy)._
+_Pairs with [layout-system.md](./layout-system.md) (container primitives + responsive strategy)._
 
 A highly popular trend for dashboards and marketing pages, the Bento Grid is a layout that uses CSS Grid to arrange content into a structured, multi-size container system. It's excellent for presenting a variety of information in a visually engaging and organized manner.
 
@@ -79,9 +79,9 @@ For smaller screens, you can adjust the grid layout using media queries, often c
 
 ---
 
-## 2. Delightful Button Micro-interactions
+## Delightful Button Micro-interactions
 
-_Use alongside the interaction-state guidance in [04-motion.md](./04-motion.md) and the button shells in [05-content-modules.md](./05-content-modules.md)._
+_Use alongside the interaction-state guidance in [motion-feedback.md](./motion-feedback.md) and the button shells in [content-modules.md](./content-modules.md)._
 
 Going beyond simple color changes, modern buttons provide tactile and engaging feedback. These "micro-interactions" make a UI feel more alive and responsive.
 
@@ -154,9 +154,9 @@ A smooth, directional background fill provides an elegant hover state. This is a
 
 ---
 
-## 3. Native CSS Scroll-Driven Animations
+## Native CSS Scroll-Driven Animations
 
-_Experiments that complement the IntersectionObserver patterns in [04-motion.md](./04-motion.md) once browser support allows._
+_Experiments that complement the IntersectionObserver patterns in [motion-feedback.md](./motion-feedback.md) once browser support allows._
 
 This is a cutting-edge, highly performant way to create animations that are directly linked to scroll progress, without any JavaScript. It uses the new `animation-timeline` property. **Note:** Browser support is new, so always check for compatibility.
 

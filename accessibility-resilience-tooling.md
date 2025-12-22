@@ -1,6 +1,6 @@
-## 6. Accessibility, Resilience & Tooling
+## Accessibility, Resilience & Tooling
 
-### 6.1. Motion and accessibility preferences
+### Motion and accessibility preferences
 
 **Why:** ~35% of users experience motion sensitivity, and WCAG 2.1 Level AA requires respecting `prefers-reduced-motion`. Failing this isn't just bad UX—it can trigger nausea, migraines, or seizures.
 
@@ -45,7 +45,7 @@ prefersReducedMotion.addEventListener('change', handleMotionPreference);
 - [WCAG 2.1: Animation from Interactions](https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html) - Compliance requirement
 - [A11y Project: prefers-reduced-motion](https://www.a11yproject.com/posts/understanding-vestibular-disorders/) - Why it matters
 
-### 6.2. Progressive enhancement with @supports
+### Progressive enhancement with @supports
 
 **Why:** `backdrop-filter` has 94% support but fails on older Firefox/Safari. Graceful degradation means your UI works everywhere, looks great on modern browsers.
 
@@ -71,7 +71,7 @@ prefersReducedMotion.addEventListener('change', handleMotionPreference);
 - [MDN: @supports](https://developer.mozilla.org/en-US/docs/Web/CSS/@supports) - Feature queries
 - [Can I Use: backdrop-filter](https://caniuse.com/css-backdrop-filter) - Browser support data
 
-### 6.3. Pointer events safety
+### Pointer events safety
 
 **Why:** Decorative overlays that cover interactive elements are the #1 glassmorphism bug. We spent an hour debugging "buttons not working" before discovering `.glass-panel::after` blocked all clicks.
 
@@ -90,7 +90,7 @@ prefersReducedMotion.addEventListener('change', handleMotionPreference);
 
 **Rule:** Pseudo-elements used for visual effects should NEVER intercept pointer events.
 
-### 6.4. HTMX and partial page updates
+### HTMX and partial page updates
 
 **Why:** HTMX replaces DOM fragments, which means any JavaScript initialization (icon hydration, event listeners) must be idempotent and re-run after swaps.
 
@@ -124,7 +124,7 @@ document.body.addEventListener('htmx:afterSwap', initializePage);
 - [HTMX Events](https://htmx.org/events/) - Lifecycle hooks
 - [HTMX Examples](https://htmx.org/examples/) - Partial update patterns
 
-### 6.5. Linting and styling debt
+### Linting and styling debt
 
 **Why:** Inline styles and raw hex values are technical debt that compounds over time. Enforce standards with linting.
 

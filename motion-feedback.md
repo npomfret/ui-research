@@ -1,6 +1,6 @@
-## 4. Motion & Feedback
+## Motion & Feedback
 
-### 4.1. Scroll-triggered reveals
+### Scroll-triggered reveals
 
 **Why:** Guides attention, improves perceived performance when data arrives incrementally. Scroll-triggered animations create a sense of progression and make content feel "built for you" rather than dumped on the page. But the key is subtlety—users should notice the polish, not the animation.
 
@@ -89,7 +89,7 @@ prefersReducedMotion.addEventListener('change', handleMotionPreference);
 - [Scroll-Linked Animations Proposal](https://drafts.csswg.org/scroll-animations-1/) - Future native scroll-linked animations
 - [Web.dev: IntersectionObserver](https://web.dev/intersectionobserver/) - Performance implications
 
-### 4.2. Interaction states
+### Interaction states
 
 **Why:** Consistent transitions create a cohesive "feel" across the entire interface. Users develop muscle memory for timing—when every button has different hover behavior, the UI feels janky even if each individual animation is polished.
 
@@ -142,3 +142,70 @@ prefersReducedMotion.addEventListener('change', handleMotionPreference);
 - [Cubic-bezier.com](https://cubic-bezier.com/) - Visual easing function editor
 - [Val Head: Designing Safer Web Animation](https://alistapart.com/article/designing-safer-web-animation-for-motion-sensitivity/) - Motion sensitivity considerations
 - [Josh Comeau: Animated Buttons](https://www.joshwcomeau.com/animation/css-transitions/) - Deep dive on button animations
+
+### Native transition APIs (2025+)
+
+CSS finally caught up with real app needs—use the new primitives instead of brittle JS class toggles.
+
+**Entry/exit animations without hacks:** `@starting-style` lets you define the hidden state for elements toggled from `display: none`, while `transition-behavior: allow-discrete` makes `display`, `visibility`, and `content-visibility` animatable.
+```css
+.toast {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 280ms var(--transition),
+    transform 280ms var(--transition),
+    visibility 0s linear 280ms;
+  transition-behavior: allow-discrete;
+}
+
+.toast[hidden] {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+@starting-style {
+  .toast {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+```
+
+**Cross-document view transitions:** Chrome (and soon Firefox) now lets you animate full page navigations with a single API call:
+```javascript
+if (document.startViewTransition) {
+  document.querySelectorAll('a[href]').forEach(link => {
+    link.addEventListener('click', (event) => {
+      const url = new URL(link.href);
+      if (url.origin === location.origin) {
+        event.preventDefault();
+        document.startViewTransition(() => router.navigate(url.pathname));
+      }
+    });
+  });
+}
+```
+Then style shared elements with `view-transition-name` and pseudo-elements:
+```css
+.hero-card {
+  view-transition-name: hero-card;
+}
+
+::view-transition-old(hero-card),
+::view-transition-new(hero-card) {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+```
+
+**Guidelines:**
+- Always short-circuit transitions when `prefers-reduced-motion: reduce`.
+- Keep navigation transitions under ~500 ms; the perceived “teleport” speed matters more than elaborate flourishes.
+- IntersectionObserver still handles in-page reveals; view transitions shine when state spans routes, dialogs, or tab navigations.
+
+**References:**
+- [Web.dev: @starting-style](https://web.dev/articles/starting-style) - Animate elements entering the DOM
+- [MDN: transition-behavior](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-behavior) - Discrete property transitions
+- [Chromium Blog: View Transitions API](https://developer.chrome.com/blog/view-transitions/) - Cross-document navigation animations

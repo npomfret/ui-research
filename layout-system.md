@@ -1,6 +1,6 @@
-## 3. Layout System
+## Layout System
 
-### 3.1. Container primitives
+### Container primitives
 
 **Why:** Reusable layout primitives eliminate "one-off" containers that drift over time. Define your grid and spacing system once, compose everywhere. Every new layout request should combine existing primitives, not spawn new CSS.
 
@@ -54,7 +54,7 @@
 - [CSS Grid auto-fit vs auto-fill](https://css-tricks.com/auto-sizing-columns-css-grid-auto-fill-vs-auto-fit/) - Understanding responsive grids
 - [Utopia Fluid Type Scale](https://utopia.fyi/) - Mathematical fluid typography and spacing
 
-### 3.2. Responsive strategy
+### Responsive strategy
 
 **Why:** Fluid dimensions via `clamp()` and intrinsic grids eliminate 90% of breakpoints. Media queries become exception handling, not the foundation of responsive design.
 

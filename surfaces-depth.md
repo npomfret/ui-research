@@ -1,6 +1,6 @@
-## 2. Surfaces, Depth, and Hierarchy
+## Surfaces, Depth, and Hierarchy
 
-### 2.1. Glassmorphism with restraint
+### Glassmorphism with restraint
 
 **Why:** A frosted card instantly communicates elevation and interaction priority. Glassmorphism creates visual hierarchy through transparency and blur—foreground elements feel physically "above" the background. But restraint is critical: if everything is glass, nothing stands out.
 
@@ -59,7 +59,7 @@
 - [Glassmorphism Generator](https://hype4.academy/tools/glassmorphism-generator) - Visual tool for tuning parameters
 - [Apple Human Interface Guidelines: Materials](https://developer.apple.com/design/human-interface-guidelines/materials) - Source of glassmorphism design language
 
-### 2.2. Status-aware micro components
+### Status-aware micro components
 
 **Why:** Small, repeatable badges and alerts reduce bespoke CSS and keep state changes obvious. Status indicators are the "LEDs" of your UI—they should be instantly scannable without reading text.
 

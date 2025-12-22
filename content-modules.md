@@ -1,8 +1,8 @@
-## 5. Content Modules
+## Content Modules
 
 > Need more experimental component ideas? See [`modern-ui-techniques-vol2.md`](./modern-ui-techniques-vol2.md) for Bento layouts and advanced micro-interactions before porting them into the patterns below.
 
-### 5.1. Hero blocks & call-to-actions
+### Hero blocks & call-to-actions
 
 **Why:** Hero sections set the tone—they're the first thing users see. Compose from tokens + utilities instead of writing bespoke CSS so your hero stays consistent with the rest of the UI.
 
@@ -64,7 +64,7 @@ lucide.createIcons();
 - Bespoke hero CSS per page (reuse `.hero` + modifiers)
 - Forgetting to hydrate icons after HTMX swaps
 
-### 5.2. Forms
+### Forms
 
 **Why:** Forms are where users interact most directly with your app. Inconsistent spacing or focus states make forms feel broken even when they work perfectly.
 
@@ -134,7 +134,7 @@ document.querySelectorAll('textarea[data-auto-resize]').forEach(textarea => {
 - [Inclusive Components: A Complete Guide to Buttons](https://inclusive-components.design/buttons/) - Form button patterns
 - [Web.dev: Building a Textarea Component](https://web.dev/building-a-textarea-component/) - Auto-resize implementation
 
-### 5.3. Tables & data panes
+### Tables & data panes
 
 **Why:** Tables display dense information—inconsistent styling makes them unreadable. HTMX partial updates should slot in seamlessly without post-processing.
 
@@ -207,7 +207,7 @@ tbody td {
 - Destructive actions that look like primary actions
 - Not confirming destructive actions (use `hx-confirm`)
 
-### 5.4. Chat/terminal surfaces
+### Chat/terminal surfaces
 
 **Why:** Chat interfaces need clear visual distinction between user and system messages. Scroll containers must handle dynamic content without layout shifts.
 
@@ -278,3 +278,28 @@ textarea.addEventListener('keydown', (e) => {
 **References:**
 - [Web.dev: Building a Chat Component](https://web.dev/building-a-chat-component/) - Scroll management patterns
 - [Chat UI Kit](https://chatscope.io/) - Reference implementations
+
+### Immersive & spatial overlays
+
+WebXR, AR Quick Look, and even simple 3D embeds are creeping into mainstream UI. Treat these surfaces as “detours” from your primary layout.
+
+**Window overlays (skeuomorphic light cues):**
+- Wrap hero imagery or featured cards with a `.window-frame` class: use `border: 1px solid rgba(255,255,255,0.08)` plus dual `box-shadow` layers (soft glow + directional drop shadow) to mimic light leaking through glass.
+- Pair with `filter: drop-shadow()` for interior elements (e.g., floating metrics) so they feel suspended above the window.
+
+**WebXR/AR launchers:**
+- Provide a consistent entry chip (icon + label) that advertises capabilities like “View in room” or “Try it on.”
+- Detect capability with `navigator.xr?.isSessionSupported('immersive-ar')`; when absent, swap to a video walkthrough instead of hiding the CTA.
+- Keep state in regular DOM so screen readers can activate fallbacks—wrap the WebXR canvas in a container with live status (`aria-live="polite"`) for loading or permission prompts.
+
+**Spatial navigation bars:**
+- When a floating nav sits over content, connect it to scroll position with a `progress` indicator or `:has()`-based highlighting so users always know where the overlay belongs.
+- Use `transform-style: preserve-3d` and subtle `translateZ` to sell depth, but clamp translations to <20px to avoid motion sickness.
+
+**Accessibility guardrails:**
+- Respect `prefers-reduced-motion` by disabling parallax/3D tilt; allow users to “lock” overlays.
+- Provide keyboard alternatives: e.g., a fallback modal describing the AR feature or direct links to 3D assets.
+
+**References:**
+- [SodaPop Media: Web Design Trends 2025](https://www.sodapopmedia.com/25-web-design-trends-shaping-2025/) - Highlights AR, sonic layers, and narrative scrollytelling.
+- [Web.dev: WebXR Device API](https://web.dev/webxr/) - Capability detection and UX considerations.

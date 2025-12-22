@@ -1,6 +1,6 @@
-## 1. Layered Foundations
+## Layered Foundations
 
-### 1.1. Design tokens first, pixels later
+### Design tokens first, pixels later
 
 **Why:** Centralized tokens (`--accent-teal`, `--radius-lg`, `--shadow-soft`) guarantee visual coherence and make global tweaks (e.g., brand color shifts) cheap. Tokens enable systematic design changes without find-and-replace hell. When your PM wants to "make it more purple," you change one variable instead of hunting through 40 files.
 
@@ -46,7 +46,7 @@ padding: clamp(1.5rem, 4vw, 3rem);
 - [Style Dictionary](https://amzn.github.io/style-dictionary/) - Build system for design tokens
 - [Open Props](https://open-props.style/) - Modern token system you can adopt wholesale
 
-### 1.2. Atmospheric backdrops without layout hacks
+### Atmospheric backdrops without layout hacks
 
 **Why:** Animated gradients plus blurred aurora layers create depth that makes glass surfaces meaningful. Static backgrounds feel flat; subtle motion adds life without distraction. The key is *subliminal* animation—users shouldn't consciously notice it, but should feel the UI is "alive."
 

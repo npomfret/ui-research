@@ -1,4 +1,4 @@
-## 9. Conclusion
+## Conclusion
 
 Following these patterns gives teams a portable recipe: **rich gradients supply atmosphere**, **glass surfaces establish hierarchy**, **subtle motion provides feedback**, and **disciplined utilities keep the codebase malleable**.
 

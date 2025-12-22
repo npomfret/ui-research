@@ -1,10 +1,10 @@
 # Web UI Anti-Patterns, Mistakes, and Outdated Techniques
 
-Use this appendix when auditing legacy stacks or onboarding new teams. [07-anti-patterns.md](./07-anti-patterns.md) lists release-blocking issues specific to the modern UI playbook; this file zooms out to industry-wide pitfalls that still crop up in reviews.
+Use this appendix when auditing legacy stacks or onboarding new teams. [anti-patterns.md](./anti-patterns.md) lists release-blocking issues specific to the modern UI playbook; this file zooms out to industry-wide pitfalls that still crop up in reviews.
 
 ---
 
-## 1. Outdated Techniques & Their Modern Alternatives
+## Outdated Techniques & Their Modern Alternatives
 
 These are practices that were once common but have been largely replaced by better, more efficient, and more powerful methods.
 
@@ -20,7 +20,7 @@ These are practices that were once common but have been largely replaced by bett
 
 ---
 
-## 2. CSS & Layout Anti-Patterns
+## CSS & Layout Anti-Patterns
 
 Mistakes in CSS that lead to fragile, hard-to-maintain stylesheets.
 
@@ -32,7 +32,7 @@ Mistakes in CSS that lead to fragile, hard-to-maintain stylesheets.
 
 ---
 
-## 3. Performance Anti-Patterns
+## Performance Anti-Patterns
 
 Common practices that degrade the user experience by making a site slow and unresponsive.
 
@@ -44,7 +44,7 @@ Common practices that degrade the user experience by making a site slow and unre
 
 ---
 
-## 4. Accessibility (A11y) Common Mistakes
+## Accessibility (A11y) Common Mistakes
 
 These mistakes can make your site unusable for people with disabilities.
 
@@ -56,7 +56,7 @@ These mistakes can make your site unusable for people with disabilities.
 
 ---
 
-## 5. UI/UX Design Anti-Patterns
+## UI/UX Design Anti-Patterns
 
 Design choices that actively frustrate or confuse users.
 
