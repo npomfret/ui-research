@@ -1,5 +1,7 @@
 # Research: Ultra-Modern Glassmorphism and Interactive UI
 
+> This appendix extends Section 2 ("Surfaces, Depth, and Hierarchy"). Read [02-surfaces.md](./02-surfaces.md) for the canonical implementation guidelines; use this file when you need deeper experiments, motion-driven variations, or inspiration references that haven't been productionized yet.
+
 This document summarizes research into modern "glassmorphism" UI techniques, with a focus on creating interactive and dynamic effects inspired by Apple's design language (including visionOS).
 
 ---

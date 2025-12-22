@@ -1,5 +1,7 @@
 ## 5. Content Modules
 
+> Need more experimental component ideas? See [`modern-ui-techniques-vol2.md`](./modern-ui-techniques-vol2.md) for Bento layouts and advanced micro-interactions before porting them into the patterns below.
+
 ### 5.1. Hero blocks & call-to-actions
 
 **Why:** Hero sections set the tone—they're the first thing users see. Compose from tokens + utilities instead of writing bespoke CSS so your hero stays consistent with the rest of the UI.

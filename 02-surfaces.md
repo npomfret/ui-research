@@ -4,6 +4,8 @@
 
 **Why:** A frosted card instantly communicates elevation and interaction priority. Glassmorphism creates visual hierarchy through transparency and blur—foreground elements feel physically "above" the background. But restraint is critical: if everything is glass, nothing stands out.
 
+> Want to push beyond the baseline recipes here? See [`glassmorphism-research.md`](./glassmorphism-research.md) for supplemental experiments (scroll-reactive blur, cursor-driven auroras, visionOS-inspired depth) and inspiration sources.
+
 **How:**
 ```css
 .glass-panel {

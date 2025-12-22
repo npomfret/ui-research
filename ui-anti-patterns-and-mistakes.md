@@ -1,6 +1,6 @@
 # Web UI Anti-Patterns, Mistakes, and Outdated Techniques
 
-This document outlines common anti-patterns, mistakes, and outdated techniques in modern web UI/UX development. Understanding what to avoid is as crucial as knowing what to implement.
+Use this appendix when auditing legacy stacks or onboarding new teams. [07-anti-patterns.md](./07-anti-patterns.md) lists release-blocking issues specific to the modern UI playbook; this file zooms out to industry-wide pitfalls that still crop up in reviews.
 
 ---
 

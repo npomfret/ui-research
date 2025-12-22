@@ -2,157 +2,148 @@
 
 Understanding what NOT to do is as important as understanding best practices. These are the patterns that will bite you in production.
 
-### 7.1. Inline styles and one-off tweaks
+### 7.1. Inline styles, one-off tweaks, and token drift
 
-**Why it hurts:** Impossible to audit, theme changes miss them, can't be overridden with utility classes. Every `style="margin-top: 10px"` is a snowflake that makes your codebase less maintainable.
+**Why it hurts:** Inline styles are impossible to audit, theme changes miss them, and token drift creates brand inconsistency. Every `style="margin-top: 10px"` is a snowflake that makes your codebase less maintainable.
 
-**Examples of pain:**
+**Example:**
 ```html
-<!-- Bad: inline styles scattered everywhere -->
+<!-- Bad -->
 <div style="display: flex; gap: 1rem; align-items: center;">
   <button style="margin-right: 8px;">OK</button>
-  <button style="margin-right: 10px;">Cancel</button> <!-- Inconsistent! -->
+  <button style="margin-right: 10px;">Cancel</button>
 </div>
 
-<!-- Good: utility classes -->
+<!-- Good -->
 <div class="flex gap-md align-center">
   <button class="btn btn-primary">OK</button>
   <button class="btn btn-secondary">Cancel</button>
 </div>
 ```
 
-**Remedy:** Ban inline styles. Use utilities for layout, tokens for styling. Lint for `style="` and fail CI if found.
+```css
+/* Bad */
+.btn-primary { background: #34d399; }
+.status-ready { color: #22c55e; }
 
-### 7.2. Pointer-blocking pseudo-elements
+/* Good */
+:root { --accent-teal: #34d399; }
+.btn-primary, .status-ready { background: var(--accent-teal); }
+```
+
+**Remedy:** Ban inline styles, lint for `style="`, and add new colors/spacings only through the token system. If you need a new value, create the token first, then consume it.
+
+### 7.2. Outdated layout & tooling techniques
+
+These relics still appear in legacy code reviews. Replace them before they rot the codebase.
+
+| Outdated Technique | Problem | Modern Alternative |
+| :--- | :--- | :--- |
+| jQuery DOM manipulation | Imperative, verbose, impossible to optimize | Declarative frameworks (React, Vue, Svelte) |
+| Table/floats for layout | Unsemantic, brittle, destroys responsiveness | CSS Grid + Flexbox |
+| CSS sprites | Optimizing for HTTP/1 and bitmap icons | HTTP/2 multiplexing + SVG/modern formats |
+| Manual bundling | No dependency graph, no code-splitting | Vite, Webpack, Parcel |
+| Pixels everywhere | Ignores user prefs, not fluid | `rem`, `clamp()`, and tokens |
+
+Also retire deeply nested selectors, magic-number spacing, and projects that omit a CSS reset. Adopt flat, class-based selectors, spacing scales, and a base reset/normalize.
+
+### 7.3. Pointer-blocking pseudo-elements
 
 **Why it hurts:** Glassmorphism overlays that forget `pointer-events: none` block ALL interaction. This is a silent killer—UI looks perfect but nothing works.
 
-**The bug we hit:**
 ```css
-/* Bad: blocks all clicks */
+/* Bad */
 .glass-panel::after {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 60%);
-  /* Missing: pointer-events: none */
+  /* Missing pointer-events */
 }
 
-/* Good: decorative only */
+/* Good */
 .glass-panel::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), transparent 60%);
-  pointer-events: none; /* CRITICAL */
+  pointer-events: none;
 }
 ```
 
 **Remedy:** ALL decorative pseudo-elements must have `pointer-events: none`. No exceptions.
 
-### 7.3. Scroll event listeners for animations
+### 7.4. Scroll handlers and animation abuse
 
-**Why it hurts:** Fires 60+ times per second, blocks main thread, causes jank on scroll. Users on low-end devices will notice immediately.
+**Why it hurts:** Scroll handlers fire 60+ times per second and force layout calculations. Animating layout/paint properties (`margin`, `width`, `background`) causes stutter, especially atop glass surfaces.
 
-**Performance comparison:**
 ```javascript
-// Bad: synchronous scroll handler
+// Bad
 window.addEventListener('scroll', () => {
   document.querySelectorAll('.fade-up').forEach(el => {
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      el.classList.add('is-visible'); // Forces layout
-    }
-  });
-}); // Runs 60+ times/second
-
-// Good: async IntersectionObserver
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('is-visible');
+    if (el.getBoundingClientRect().top < window.innerHeight) {
+      el.classList.add('is-visible');
     }
   });
 });
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-// Only fires when elements cross threshold
+
+// Good
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('is-visible'));
+});
 ```
 
-**Remedy:** Use IntersectionObserver for scroll-triggered effects. Never use scroll event listeners.
-
-### 7.4. Token drift and ad-hoc colors
-
-**Why it hurts:** Brand inconsistency, impossible to theme, creates design debt that compounds over time.
-
-**Example of drift:**
 ```css
-/* Bad: colors defined all over */
-.btn-primary { background: #34d399; }
-.status-ready { color: #34d399; }
-.link-green { color: #10b981; } /* Close but not identical */
-.success-badge { background: #22c55e; } /* Also green-ish? */
-
-/* Good: single source of truth */
-:root {
-  --accent-teal: #34d399;
+/* Bad */
+.btn:hover {
+  margin-top: -2px;
+  width: 102%;
 }
 
-.btn-primary { background: var(--accent-teal); }
-.status-ready { color: var(--accent-teal); }
-.link { color: var(--accent-teal); }
-.success-badge { background: var(--accent-teal); }
+/* Good */
+.btn:hover {
+  transform: translateY(-2px) scale(1.02);
+}
 ```
 
-**Remedy:** All colors must be tokens. Lint for hex values outside `:root`. Add new colors to the token system, never inline.
+**Remedy:** Use IntersectionObserver, animate only `transform`/`opacity`, and consult [csstriggers.com](https://csstriggers.com/) before introducing motion. Ban `transition: all`.
 
-### 7.5. Ignoring motion preferences
+### 7.5. Performance regressions that sneak into launch
 
-**Why it hurts:** Triggers nausea/migraines in users with vestibular disorders. WCAG 2.1 Level AA violation. Could expose you to lawsuits.
+- **Render-blocking resources:** `<script>` in `<head>` without `defer/async` or CSS loaded late.
+- **Unoptimized assets:** Huge bitmaps, missing `srcset`, no lazy-loading.
+- **Bloated bundles:** No code-splitting, third-party scripts shipped to every route.
+- **Zero caching strategy:** Static assets re-downloaded on each visit, no CDN, no cache headers.
+- **Layout thrashing:** Alternating reads/writes in loops; fix with `requestAnimationFrame`, batch DOM writes, and ResizeObserver.
 
-**Statistics:** ~35% of users experience some motion sensitivity. 1 in 20 people will feel sick from your animations if you don't respect `prefers-reduced-motion`.
+Treat Lighthouse/perf budgets as blocking checks, not “nice to have.”
 
-**Remedy:** Always implement `@media (prefers-reduced-motion: reduce)` and listen for runtime changes.
+### 7.6. Accessibility gaps
 
-### 7.6. Breakpoint soup
+- **Ignoring `prefers-reduced-motion`:** Triggers nausea/migraines and fails WCAG.
+- **Poor contrast & missing focus states:** Killing readability and keyboard flow (never remove outlines without replacements).
+- **Non-semantic HTML:** `<div onClick>` instead of `<button>` removes built-in a11y.
+- **Missing/meaningless `alt` text:** Screen readers get zero context.
+
+**Remedy:** Ship semantic HTML, pair iconography with text, and treat the accessibility tree as part of the UI surface. Listen for runtime changes to `prefers-reduced-motion` so toggles take effect immediately.
+
+### 7.7. UX & product dark patterns
+
+- **Cluttered views:** Trying to show everything at once destroys scannability; use progressive disclosure.
+- **Mystery-meat navigation:** Icons without labels slow users down.
+- **Carousels for core content:** Users rarely interact past slide one; prefer grids/stacked cards.
+- **Dark patterns (confirmshaming, hidden opt-outs):** Short-term metrics at the cost of user trust.
+
+Keep the UI honest—prioritize comprehension and ethical flows over gimmicks.
+
+### 7.8. Breakpoint soup
 
 **Why it hurts:** Maintenance nightmare. Every layout change requires updating 5+ breakpoints. Fluid design eliminates this.
 
-**Example:**
 ```css
-/* Bad: breakpoint soup */
+/* Bad */
 .container { width: 1200px; }
 @media (max-width: 1199px) { .container { width: 960px; } }
 @media (max-width: 991px) { .container { width: 720px; } }
-@media (max-width: 767px) { .container { width: 540px; } }
-@media (max-width: 575px) { .container { width: 100%; } }
 
-/* Good: fluid */
+/* Good */
 .container { width: min(1200px, 95vw); }
 ```
 
 **Remedy:** Use `clamp()`, `min()`, `max()`, and auto-fit grids. Aim for 0-2 breakpoints max.
-
-### 7.7. Animating expensive properties
-
-**Why it hurts:** Forces layout/paint on every frame. Causes stuttering, drains battery, fails on low-end devices.
-
-**Performance impact:**
-```css
-/* Bad: triggers layout on every frame */
-.btn:hover {
-  margin-top: -2px; /* Layout */
-  width: 102%; /* Layout */
-  background: #fff; /* Paint */
-}
-
-/* Good: only composite */
-.btn:hover {
-  transform: translateY(-2px) scale(1.02); /* Composite only */
-}
-```
-
-**Remedy:** Only animate `transform` and `opacity`. Check [CSS Triggers](https://csstriggers.com/) before animating any property.
-
-**References:**
-- [Paul Irish: Why Moving Elements With Translate Is Better Than Pos](https://www.paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/) - Transform performance
-- [Google: Avoid Large, Complex Layouts](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing) - Layout thrashing
