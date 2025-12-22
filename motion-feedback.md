@@ -209,3 +209,21 @@ Then style shared elements with `view-transition-name` and pseudo-elements:
 - [Web.dev: @starting-style](https://web.dev/articles/starting-style) - Animate elements entering the DOM
 - [MDN: transition-behavior](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-behavior) - Discrete property transitions
 - [Chromium Blog: View Transitions API](https://developer.chrome.com/blog/view-transitions/) - Cross-document navigation animations
+
+### Button micro-interactions
+
+Micro interactions keep buttons feeling tactile:
+- Layer two effects: a quick lift/scale plus a glow or gradient sweep. Keep movement under 2px so actions feel precise, not floaty.
+- Drive highlights with pseudo-elements and CSS variables so every button variant shares the same timing token.
+- Sequence states intentionally—hover (~180 ms) glides up, active (~80 ms) compresses back down, focus adds a high-contrast outline so keyboard flows feel equally rich.
+
+Need inspiration? Check Josh Comeau’s “Tactile buttons” breakdown or search [CodePen’s button micro-interactions](https://codepen.io/search/pens?q=button%20microinteraction) to copy timing curves into your token set.
+
+### CSS scroll-driven animations
+
+Modern browsers ship scroll timelines so you can sync motion with scroll without JavaScript:
+- Use `animation-timeline: scroll(block)` for progress bars, table-of-contents highlights, or hero masks that reveal as the reader advances.
+- For card reveals, hook into `animation-timeline: view()` so each element animates as it enters the viewport; tune `animation-range` to cap how much motion occurs.
+- Wrap timelines in `@supports (animation-timeline: scroll())` and fall back to the IntersectionObserver pattern above for browsers that haven’t caught up, and always disable scroll-linked motion when `prefers-reduced-motion: reduce`.
+
+References: [MDN scroll-driven animations](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll-driven_animations) and the [Chrome samples](https://github.com/GoogleChromeLabs/web-animations-js) include runnable demos you can adapt.

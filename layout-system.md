@@ -105,3 +105,13 @@ body {
 - [Smashing Magazine: Practical Aspects of Modern CSS Layouts](https://www.smashingmagazine.com/2023/05/practical-aspects-modern-css-layouts/) - Fluid layout patterns
 - [Modern Fluid Typography](https://www.smashingmagazine.com/2022/01/modern-fluid-typography-css-clamp/) - Math behind clamp()
 - [Responsive Grid Without Media Queries](https://css-tricks.com/look-ma-no-media-queries-responsive-layouts-using-css-grid/) - Auto-fit grid deep dive
+
+### Bento grid layouts
+
+Bento-style dashboards mix block sizes inside a single grid for visual storytelling:
+- Use `grid-auto-rows` (e.g., 150–200px) so cards share a rhythm. Span standout panels with utility classes (`.wide`, `.tall`) rather than duplicating markup.
+- Keep spans semantic (`data-card="metric"`, etc.) so assistive tech reads content in a sensible order even when the visual placement changes.
+- Collapse spans under ~768px by resetting them to `span 1` and stacking content in DOM order; the layout should feel like a curated list rather than a broken mosaic.
+- Pair the grid with progressive enhancement: browsers without `subgrid`/feature support still get a simple stacked layout.
+
+Need turnkey code? See the Bento example in [Every Layout](https://every-layout.dev/layouts/) or [this CodePen search](https://codepen.io/search/pens?q=bento%20grid) for copy-ready snippets.

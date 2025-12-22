@@ -4,7 +4,7 @@ A condensed field guide for engineers who need to ship cinematic, high-trust web
 
 ## How to Navigate This Research
 
-### Core Playbook (pick any file)
+### Core Playbook 
 - [Layered Foundations](./layered-foundations.md) — design tokens, atmospheric backgrounds, and the primitives every other pattern relies on.
 - [Surfaces, Depth, and Hierarchy](./surfaces-depth.md) — glassmorphism recipes, elevation cues, and status-aware micro-components.
 - [Layout System](./layout-system.md) — container primitives, utility philosophy, and fluid responsive strategy.
@@ -17,8 +17,6 @@ A condensed field guide for engineers who need to ship cinematic, high-trust web
 
 ### Supplemental Research Files
 - [glassmorphism-research.md](./glassmorphism-research.md) — deep dive on atmospheric materials, cursor/scroll dynamics, and inspiration pulled from visionOS.
-- [modern-ui-techniques-vol2.md](./modern-ui-techniques-vol2.md) — follow-up experiments covering Bento layouts, button micro-interactions, and scroll-driven CSS animations.
 - [modern-ui-libraries.md](./modern-ui-libraries.md) — curated tooling list (animation engines, headless UI kits, state libraries, and WebGL helpers) for when you need production-ready building blocks.
-- [ui-anti-patterns-and-mistakes.md](./ui-anti-patterns-and-mistakes.md) — broader industry anti-pattern catalogue; use it during legacy audits or when onboarding teams who are still shipping pre-token CSS.
 
-Treat these notes as modular—jump into whatever topic you need, and lean on the supplemental files when you want extra depth, vendor options, or competitive references.
+Treat these notes as modular—jump into whatever topic you need, and lean on the supplemental files when you want extra depth, vendor options, or competitive references. `anti-patterns.md` now includes both release blockers and broader industry pitfalls.

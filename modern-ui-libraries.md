@@ -12,13 +12,28 @@ Pure CSS is great for simple transitions, but for complex, orchestrated, or phys
 
 ### Framer Motion
 - **What it is:** A production-ready animation library specifically for React.
-- **Why it's modern:** It provides a declarative API that integrates seamlessly with JSX, making it incredibly intuitive for React developers to animate components. It handles gestures (drag, tap, hover), layout animations (`AnimatePresence`), and complex state-based transitions with ease. It's the go-to for most UI micro-interactions within a React app.
-- **Use for:** UI micro-interactions, page transitions, animating component states, and simple gesture-based animations.
+- **Why it's modern (2025):** New deferred keyframe resolution and render-loop batching deliver up to 6× faster interpolation for unknown units, smoother overlay/cursor interactions, and better React Server Components compatibility without layout thrash. Gesture primitives, shared layout transitions, and orchestration hooks stay declarative. citeturn0search1turn0search2
+- **Use for:** UI micro-interactions, page transitions, animating component states, and simple gesture-based animations in React/Next.js stacks.
 
 ### GSAP (GreenSock Animation Platform)
 - **What it is:** A professional-grade, high-performance animation engine that is framework-agnostic.
-- **Why it's modern:** GSAP is unparalleled in performance and control. Its imperative, timeline-based sequencing allows for incredibly complex and precisely synchronized animations. The **ScrollTrigger** plugin is the industry standard for creating sophisticated scroll-based animations.
-- **Use for:** Animation-heavy marketing sites, complex SVG animations, interactive storytelling, and any scenario requiring a high degree of control and performance. It can be used alongside Framer Motion.
+- **Why it's modern (2025):** Webflow now underwrites GSAP, so every plugin—including previously paid Club GreenSock tools like SplitText and MorphSVG—is free. Webflow’s Designer ships native GSAP timeline editing, ScrollTrigger, breakpoint-awareness, and prefers-reduced-motion guards, while devs still get the raw JS API for bespoke integrations. citeturn1search0turn1search1turn1search5turn1search8
+- **Use for:** Animation-heavy marketing sites, CMS-driven scrollytelling, or any project needing designer-friendly tooling plus low-level control.
+
+### Rive
+- **What it is:** A state-machine-driven animation platform with an open-source renderer and runtimes (Web, React, mobile, game engines).
+- **Why it's modern:** The Rive Renderer and runtimes (`@rive-app/canvas`, `@rive-app/webgl2`) are open-source, bringing 120 fps vector rendering, data binding, randomization, joysticks, and audio sync. Motion designers build logic in the editor; engineers drop in a light runtime. citeturn3search0turn3search1turn3search2turn3search6
+- **Use for:** Dynamic UI components (toggles, avatars, loaders) that need cross-platform parity and state-driven motion.
+
+### Lottie / dotLottie ecosystem
+- **What it is:** JSON- and `.lottie`-based animations with lightweight runtimes.
+- **Why it's modern:** LottieFiles’ dotLottie runtimes pair with a ThorVG-powered player for better fidelity and smaller payloads, while the 2024 supply-chain incident in the legacy `@lottiefiles/lottie-player` package pushed teams toward the new secure runtimes—pin versions or migrate accordingly. citeturn2search0turn2search2
+- **Use for:** Marketing micro-animations, onboarding moments, and handoff from motion designers via After Effects/Bodymovin.
+
+### Motion Canvas
+- **What it is:** A TypeScript-first animation DSL rendering to WebGL/WebGPU with a timeline metaphor.
+- **Why it's modern:** The 2025 package family (`@motion-canvas/core`, `2d`, `docs`, etc.) integrates with Vite, giving engineers fine-grained, code-driven motion and export options (MP4, WebM, image sequences) for documentation and product videos. citeturn1search2
+- **Use for:** Developer-focused storytelling, interactive walk-throughs, and documentation motion where code ownership matters.
 
 ---
 
@@ -75,8 +90,13 @@ To create truly immersive and "ultra-modern" UI effects, you'll often need to le
 
 ### Spline
 - **What it is:** A web-based 3D design tool that lets you create interactive 3D scenes and export them for the web.
-- **Why it's modern:** It's a design-first tool that abstracts away the code. You can create beautiful 3D objects and animations in a visual editor, add simple interactivity (like hover states or click events), and get a link or code snippet to embed directly in your site.
+- **Why it's modern (2025 “Hana”):** Adds one-click extrusion for any vector shape, timeline keyframes with a graph editor, AI-assisted asset creation, and improved exports (Android/visionOS glass shaders, WebRTC assistant). Designers can lift 2D UI into spatial scenes and hand off via lightweight embeds or React runtimes. citeturn0search0
 - **Use for:** Quickly adding polished, interactive 3D elements to a website without writing complex WebGL code. Perfect for marketing sites and product showcases.
+
+### Visionary (WebGPU Gaussian Splatting)
+- **What it is:** A WebGPU-powered platform + TypeScript library for rendering dynamic 3D/4D Gaussian splatting scenes (3DGS/4DGS) directly in the browser, complete with ONNX inference.
+- **Why it's modern:** Released December 2025, it blends neural rendering, avatar generation, and generative post-processing into a scriptable pipeline, making AI-native 3D scenes viable inside dashboards without desktop tools. citeturn1academia15
+- **Use for:** Experimental XR experiences, AI-generated digital twins, and research products that need neural scenes rendered on the web.
 
 ---
 
@@ -97,3 +117,45 @@ Teams are increasingly skipping heavyweight frameworks in favor of lean, composa
 - **Why it's modern:** You own the markup/styles, but avoid reinventing complex controls (command palettes, radial menus). Most kits expose design tokens you can wire into this repo’s foundation layer.
 
 Guidance: start with vanilla + these micro libraries, then reach for React/Vue only when you truly need app-scale state. Monitor bundle budgets and prefer ESM imports so tree-shaking kills unused components.
+
+---
+
+## Icon & vector graphic libraries
+
+### Phosphor Icons
+- **What it is:** A huge, multi-weight icon family (thin → heavy + duotone) with React, Vue, Svelte, Flutter, and vanilla SVG builds.
+- **Why it's modern:** Lets you swap stroke weight or duotone fills via CSS variables, so icons inherit your token system without hand-editing files. Great for cinematic dashboards that need expressive glyphs. citeturn0search1turn0search10
+
+### Lucide
+- **What it is:** The actively maintained Feather fork with ~1,500 open-source icons.
+- **Why it's modern:** Ships ESM-ready packages for React 19/Next.js, Vue, Svelte, and more; perfect when you want Feather’s aesthetic with current tooling. citeturn0search1turn0search5
+
+### Heroicons
+- **What it is:** Tailwind’s outline/solid icon pair set.
+- **Why it's modern:** Out of the box harmony with Tailwind spacing/tokens, plus MIT licensing and React components. Ideal for forms, nav, and marketing pages where you want UI kit consistency. citeturn0search4turn0search8
+
+### Iconoir & Boxicons
+- **What they are:** Two minimalist stroke libraries (Iconoir ~1,500 glyphs, Boxicons line/solid/logo variants) with SVG + framework bindings.
+- **Why they're modern:** Lightweight, easy to recolor, and cover niche verticals (IoT, dev tools) that mainstream sets sometimes miss. citeturn0search7turn0search6
+
+### IconStack
+- **What it is:** A metasearch and download portal indexing 50k+ icons from Tabler, Ant Design, Radix, Iconsax, Solar, Bootstrap, etc.
+- **Why it's modern:** Single search box with license filters and SVG/React export saves time when exploring multiple visual directions before standardizing on a house icon set. citeturn0search0
+
+### Legacy workhorses
+- **What:** Font Awesome, Bootstrap Icons, Simple Line Icons.
+- **Why keep them around:** Font Awesome still accounts for ~93% of icon usage across the web, so inheriting a project means understanding `fa-*` workflows and upgrade paths; the ecosystems include icon fonts for environments that can’t use inline SVG. citeturn0search2
+
+### Vector rendering & datasets
+- **ThorVG:** MIT-licensed vector engine (C++, WebAssembly, WebGPU) for runtime icon theming, animated logos, and Lottie alternatives when you need a tiny renderer. citeturn0search12
+- **InternSVG / UniSVG datasets:** 2025 multimodal suites for training/evaluating SVG generation models—useful if you plan to automate icon QA or synthesize glyphs with GenAI pipelines. citeturn0academia13turn0academia14
+### Aggregated search: IconStack
+- **What it is:** A metasearch that indexes 50k+ icons from Tabler, Ant Design, Radix, Iconsax, Solar, Bootstrap, etc.
+- **Why it's modern:** Cuts the hunt time—one search with license filters; download SVG or copy JSX. Use it during the exploration phase before locking onto a house set. citeturn0search0
+
+### Legacy workhorses (Font Awesome, Bootstrap Icons, Simple Line Icons)
+- **Why they still matter:** Font Awesome alone shows up on ~93% of icon-equipped sites, and older products often rely on icon fonts. Knowing these ecosystems keeps migrations sane. citeturn0search2
+
+### Vector rendering pipeline: ThorVG + InternSVG
+- **ThorVG:** Modern MIT-licensed vector engine with WebAssembly/WebGPU backends—great for runtime icon theming, animated logos, or when you need a tiny SVG renderer without Lottie. citeturn0search12
+- **InternSVG/UniSVG datasets:** Fresh 2025 multimodal datasets for training/evaluating SVG generation models. Track these if you plan to automate icon QA or synthesize glyphs with GenAI. citeturn0academia13turn0academia14

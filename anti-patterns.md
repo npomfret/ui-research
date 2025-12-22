@@ -147,3 +147,52 @@ Keep the UI honest—prioritize comprehension and ethical flows over gimmicks.
 ```
 
 **Remedy:** Use `clamp()`, `min()`, `max()`, and auto-fit grids. Aim for 0-2 breakpoints max.
+
+---
+
+## Legacy & industry pitfalls
+
+Use this section when auditing older stacks or onboarding teams who are still shipping pre-token CSS.
+
+### Outdated techniques & their modern alternatives
+
+| Outdated Technique | Problem | Modern Alternative |
+| :--- | :--- | :--- |
+| **jQuery for DOM manipulation** | Imperative, verbose, and inefficient for complex UIs. Does not scale well. | **Declarative UI frameworks** (React, Vue, Svelte) that manage the DOM for you. |
+| **Table/Floats for layout** | Unsemantic, brittle, terrible for responsiveness. | **CSS Grid & Flexbox** for two- and one-dimensional layout. |
+| **CSS sprites** | Optimized for HTTP/1 + bitmaps. | **HTTP/2** + SVG/modern formats. |
+| **Manual JS/CSS bundling** | No dependency graph, no code splitting. | **Vite, Webpack, Parcel** or native ESM build pipelines. |
+| **Flash/Silverlight/Applets** | Proprietary, insecure, unsupported on mobile. | **HTML5 canvas, WebGL, CSS animations, WASM.** |
+| **Pixels everywhere** | Ignores user prefs, not fluid. | **Relative units** (`rem`, `em`, `clamp()`) plus design tokens. |
+
+### CSS & layout mistakes
+
+- **Overusing `!important`:** Signals a broken cascade. Lower specificity, refactor selectors.
+- **Deep selector chains:** `div.container #main .sidebar ul li a` breaks whenever markup changes. Prefer flat, class-based selectors or BEM.
+- **Magic numbers:** Random pixel tweaks mask layout issues. Use Grid/Flexbox utilities or tokenized spacing instead.
+- **No CSS reset:** Baseline differences across browsers compound layout drift. Start with something like `modern-normalize`.
+- **Mixed concerns:** Utility classes doing non-utility work (`.text-red-500` used for layout) create chaos. Stick to a single approach per layer.
+
+### Performance anti-patterns
+
+- **Render-blocking resources:** `<script>` tags in `<head>` without `defer/async` halt rendering.
+- **Unoptimized images:** Ship WebP/AVIF via `<picture>` + `srcset`, lazy-load offscreen assets.
+- **Bloated bundles:** Code split per route/component, use dynamic `import()` and monitor budgets.
+- **No caching strategy:** Configure `Cache-Control`, leverage CDNs, fingerprint assets.
+- **Layout thrashing:** Batch DOM reads/writes; use `requestAnimationFrame`, ResizeObserver, or virtualization.
+
+### Accessibility (A11y) mistakes
+
+- **Non-semantic HTML:** `<div onClick>` instead of `<button>` strips keyboard semantics.
+- **Poor contrast:** Fails WCAG; test against AA/AAA ratios.
+- **Missing/meaningless `alt` text:** Describe intent; use `alt=""` for decoratives.
+- **Invisible focus states:** Never remove outlines without a better replacement (`:focus-visible`).
+- **Label-less forms:** Tie inputs to labels via `for`/`id` or nesting so screen readers announce context.
+
+### UX design anti-patterns
+
+- **Cluttered interfaces:** Cognitive overload kills comprehension. Embrace whitespace and progressive disclosure.
+- **Inconsistent patterns:** Multiple button styles for one action erode trust—enforce a design system.
+- **Mystery meat nav:** Icons need labels. Pair glyphs with text, especially for primary nav.
+- **Content carousels:** Poor engagement/accessibility; prefer grids or stacked cards with clear affordances.
+- **Dark patterns:** Confirmshaming, hidden opt-outs, forced continuity—short-term gains that damage trust. Be explicit and reversible.
