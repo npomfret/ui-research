@@ -180,3 +180,34 @@ purgecss --content 'views/**/*.html' --css 'public/css/style.css'
 - [Stylelint](https://stylelint.io/) - CSS linter with extensive rules
 - [PurgeCSS](https://purgecss.com/) - Remove unused CSS
 - [CSS Stats](https://cssstats.com/) - Analyze CSS complexity
+
+### Screen-Reader Compatibility
+
+**Why:** Ensuring your website is accessible to screen reader users is a legal and ethical imperative. It also improves the experience for all users by enforcing a clear and logical document structure.
+
+**Best Practices:**
+- **Semantic HTML:** Use HTML elements for their intended purpose (`<nav>`, `<button>`, `<h1>`). This provides a clear structure for screen readers.
+- **ARIA (Accessible Rich Internet Applications):** Use ARIA roles and attributes to add extra information to your HTML, especially for dynamic content. Use `aria-label` for buttons without text, `aria-describedby` for form fields that need extra explanation, and `role` attributes for custom components.
+- **Alt Text:** Provide descriptive alt text for all informative images. For decorative images, use an empty `alt=""` attribute to hide them from screen readers.
+- **Keyboard Navigation:** Ensure all interactive elements are accessible and operable via the keyboard. The tab order should be logical and follow the visual flow of the page.
+- **Headings:** Use a logical heading structure (`<h1>` to `<h6>`) to organize your content. This allows screen reader users to easily navigate the page.
+
+**Testing:**
+- **Manual Testing:** Use a screen reader to navigate your site. Popular screen readers include NVDA (Windows, free), JAWS (Windows, paid), and VoiceOver (macOS/iOS, built-in).
+- **Automated Tools:** Use tools like Axe, WAVE, or Lighthouse to catch common accessibility issues.
+
+### Internationalization (i18n)
+
+**Why:** Internationalization is the process of designing your application so it can be easily adapted to different languages and regions. This is crucial for reaching a global audience.
+
+**Best Practices:**
+- **Separate Content from Code:** Store all user-facing strings in translation files (e.g., JSON), not in your source code.
+- **Use a Library:** Use a dedicated i18n library to manage translations, pluralization, and locale-specific formatting.
+- **Flexible Layouts:** Design your UI to accommodate different text lengths. Some languages are more verbose than others.
+- **Locale-Specific Formatting:** Use the `Intl` object in JavaScript or your i18n library to format dates, numbers, and currencies according to the user's locale.
+- **Right-to-Left (RTL) Support:** If you plan to support languages like Arabic or Hebrew, ensure your layout can be flipped for RTL display.
+
+**Technologies and Libraries:**
+- **i18next:** A popular, framework-agnostic i18n framework for JavaScript. It has a rich ecosystem of plugins and integrations for frameworks like React, Vue, and Angular.
+- **FormatJS (React-Intl):** A comprehensive i18n library for React, with a focus on standards-compliance and performance.
+- **`Intl` API:** The built-in JavaScript Internationalization API. It's a good choice for basic formatting of dates, numbers, and currencies without adding a large library to your project.
