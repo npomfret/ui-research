@@ -64,3 +64,4 @@ Use this checklist when implementing or auditing a UI built with these patterns:
 - [ ] **Documentation** - Component library or style guide exists
 - [ ] **HTMX hydration** - Icon/component initialization on `htmx:afterSwap`
 - [ ] **Browser testing** - Tested in Chrome, Firefox, Safari (including fallbacks)
+- [ ] **Motion QA artifacts** - Every motion change links Chromatic/Playwright snapshots, DevTools animation traces, and reduced-motion video captures (see `accessibility-resilience-tooling.md`)

@@ -78,6 +78,29 @@ document.querySelectorAll('[data-animate]').forEach(node => {
 
 Chrome/Edge/Safari 17.4+ now ship `@scroll-timeline`, `animation-timeline`, and `animation-range`, so you can scrub animations directly off scroll progress, while Chrome 145 layers on declarative scroll-triggered animations for once-per-section reveals. Scope complex narratives with `timeline-scope` so one timeline can orchestrate multiple elements. Treat these APIs as progressive enhancement—feature-detect them and fall back to the IntersectionObserver pattern above so older browsers still get reveals.
 
+```css
+/* timeline-scope drives multiple child timelines from one section */
+.feature-section {
+  timeline-scope: --cards, --progress;
+}
+
+@scroll-timeline --cards {
+  source: selector(.feature-section);
+  orientation: block;
+}
+
+.feature-card {
+  animation: float-in 0.8s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+  animation-timeline: --cards;
+  animation-range: entry 10% exit 70%;
+}
+
+@keyframes float-in {
+  from { opacity: 0; transform: translateY(40px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+```
+
 **Respecting motion preferences:** Always provide escape hatch for users with vestibular disorders:
 ```css
 @media (prefers-reduced-motion: reduce) {
@@ -214,14 +237,25 @@ CSS finally caught up with real app needs—use the new primitives instead of br
 
 **Cross-document view transitions:** Chrome (and soon Firefox) now lets you animate full page navigations with a single API call:
 ```javascript
-if (document.startViewTransition) {
+const supportsViewTransitions = typeof document.startViewTransition === 'function';
+
+if (supportsViewTransitions) {
   document.querySelectorAll('a[href]').forEach(link => {
     link.addEventListener('click', (event) => {
-      const url = new URL(link.href);
-      if (url.origin === location.origin) {
-        event.preventDefault();
-        document.startViewTransition(() => router.navigate(url.pathname));
-      }
+      const url = new URL(link.href, location.origin);
+      if (url.origin !== location.origin) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      event.preventDefault();
+      const transition = document.startViewTransition(() => router.navigate(url.pathname));
+
+      transition.ready.then(() => {
+        console.log('transition ready', document.activeViewTransition);
+      });
+
+      transition.finished.finally(() => {
+        console.log('transition finished');
+      });
     });
   });
 }
