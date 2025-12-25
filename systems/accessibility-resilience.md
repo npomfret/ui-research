@@ -183,6 +183,10 @@ purgecss --content 'views/**/*.html' --css 'public/css/style.css'
 - [PurgeCSS](https://purgecss.com/) - Remove unused CSS
 - [CSS Stats](https://cssstats.com/) - Analyze CSS complexity
 
+### Future-ready compliance
+
+Keep an eye on sustainability and edge-compute requirements—the latest W3C Web Sustainability Guidelines draft and runtime notes live in [`research/emerging-web-technologies.md`](../research/emerging-web-technologies.md). When new criteria land (energy, water, emissions, edge latency), thread them back into `workflow/audit-checklist.md` so accessibility and sustainability stay aligned.
+
 ### Screen-Reader Compatibility
 
 **Why:** Ensuring your website is accessible to screen reader users is a legal and ethical imperative. It also improves the experience for all users by enforcing a clear and logical document structure.

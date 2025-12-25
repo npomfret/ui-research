@@ -31,6 +31,7 @@ This repo is now organized around the workflows senior UI engineers actually fol
 | [`research/animations-and-microinteractions.md`](./research/animations-and-microinteractions.md) | Native scroll/view-transition techniques, timeline-scope, API primers. |
 | [`research/glassmorphism.md`](./research/glassmorphism.md) | Atmospheric materials, cursor/scroll dynamics, inspiration pulls. |
 | [`research/modern-ui-libraries.md`](./research/modern-ui-libraries.md) | Curated tooling list: animation engines, headless kits, WebGL helpers. |
+| [`research/emerging-web-technologies.md`](./research/emerging-web-technologies.md) | Signals on AI-native UI, Wasm 3.0, edge runtimes, sustainability mandates. |
 
 ## 5. Inspiration Gallery (`/inspiration`)
 

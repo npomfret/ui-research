@@ -57,6 +57,7 @@ Use this checklist when implementing or auditing a UI built with these patterns:
 - [ ] **Bundle size** - CSS < 50KB compressed
 - [ ] **Unused CSS** - PurgeCSS or similar removes dead code
 - [ ] **Critical CSS** - Above-fold styles inlined
+- [ ] **WSG alignment** - Map performance/infra work to the sustainability criteria in [`research/emerging-web-technologies.md`](../research/emerging-web-technologies.md#sustainable-web-development)
 
 ### Phase 8: Maintenance
 - [ ] **Lint rules** - Stylelint configured to catch anti-patterns

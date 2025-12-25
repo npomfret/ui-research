@@ -7,7 +7,7 @@ Start with the [Field Guide](./field-guide.md) for a tour of the six focus areas
 - `systems/` — design tokens, layered backgrounds, layout & surfaces, accessibility/resilience.
 - `interaction/` — motion recipes, scroll/view-transition guidance, reusable content modules.
 - `quality/` — anti-pattern sweeps, motion QA artifact requirements, reviewer checklists.
-- `research/` — deep dives like glassmorphism, modern UI libraries, and animation dossiers.
+- `research/` — deep dives like glassmorphism, modern UI libraries, animation dossiers, and emerging web technologies.
 - `inspiration/` — tagged gallery of production-grade references to pull from.
 - `workflow/` — implementation checklist, PR expectations, and adoption workflows.
 
