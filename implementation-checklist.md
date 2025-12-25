@@ -30,6 +30,11 @@ Use this checklist when implementing or auditing a UI built with these patterns:
 - [ ] **Reduced motion** - `@media (prefers-reduced-motion: reduce)` implemented
 - [ ] **Runtime listener** - `MediaQueryList` change listener for accessibility toggle
 - [ ] **GPU-friendly** - Only animating `transform` and `opacity`
+- [ ] **Scroll timelines** - `@scroll-timeline` / `animation-timeline` used where supported with `@supports` fallback to IntersectionObserver
+- [ ] **View transitions gated** - `document.startViewTransition` feature-detected, wrapped in `prefers-reduced-motion` + escape hatch
+- [ ] **Overflow-safe transitions** - No shared elements wrapped in `overflow: hidden`; use `overflow: clip` or nested `::view-transition-group()` when needed
+- [ ] **Motion tokens** - Duration, easing, and keyframes centralized so hover, press, and scroll cues stay consistent
+- [ ] **QA hooks** - Snapshot tooling (Chromatic/Playwright) configured to pause/compare motion states; Animations panel recordings captured for critical flows
 
 ### Phase 5: Components
 - [ ] **Button variants** - `.btn-primary`, `.btn-secondary`, `.btn-danger`

@@ -8,7 +8,7 @@ A condensed field guide for engineers who need to ship cinematic, high-trust web
 - [Layered Foundations](./layered-foundations.md) — design tokens, atmospheric backgrounds, and the primitives every other pattern relies on.
 - [Surfaces, Depth, and Hierarchy](./surfaces-depth.md) — glassmorphism recipes, elevation cues, and status-aware micro-components.
 - [Layout System](./layout-system.md) — container primitives, utility philosophy, and fluid responsive strategy.
-- [Motion & Feedback](./motion-feedback.md) — scroll-triggered reveals, interaction states, new native transition APIs, and reduced-motion handling.
+- [Motion & Feedback](./motion-feedback.md) — scroll-driven reveals, interaction states, view transition recipes, and a QA playbook for reduced-motion + fallback coverage.
 - [Content Modules](./content-modules.md) — reusable hero, form, table, chat, and spatial overlay shells.
 - [Accessibility, Resilience & Tooling](./accessibility-resilience-tooling.md) — progressive enhancement, HTMX hydration, automation/linting safeguards.
 - [Anti-Patterns to Avoid](./anti-patterns.md) — release-blocking issues (inline styles, pointer-blocking overlays, perf regressions, etc.).

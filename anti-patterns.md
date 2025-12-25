@@ -71,7 +71,7 @@ Also retire deeply nested selectors, magic-number spacing, and projects that omi
 
 ### Scroll handlers and animation abuse
 
-**Why it hurts:** Scroll handlers fire 60+ times per second and force layout calculations. Animating layout/paint properties (`margin`, `width`, `background`) causes stutter, especially atop glass surfaces.
+**Why it hurts:** Scroll handlers fire 60+ times per second and force layout calculations. Animating layout/paint properties (`margin`, `width`, `background`) causes stutter, especially atop glass surfaces. Modern browsers now ship scroll timelines and view transitions—if you stick to legacy patterns, you miss GPU-accelerated motion and end up polyfilling behavior the platform already solved.
 
 ```javascript
 // Bad
@@ -102,7 +102,9 @@ const observer = new IntersectionObserver((entries) => {
 }
 ```
 
-**Remedy:** Use IntersectionObserver, animate only `transform`/`opacity`, and consult [csstriggers.com](https://csstriggers.com/) before introducing motion. Ban `transition: all`.
+**View-transition killer:** Wrapping shared elements in `overflow: hidden` (or clipping them with mismatched radii) prevents the new `::view-transition-*` snapshots from rendering, producing hard cuts and flicker. Scope masks inside the transitioning element, or upgrade to nested `::view-transition-group()` plus `overflow: clip` so the browser can composite layers correctly (see [Chrome’s view-transition updates](https://developer.chrome.com/blog/view-transitions-updates/#nested-groups) and [community fixes](https://stackoverflow.com/questions/77476760/how-to-animate-clip-path-with-new-view-transitions-api)).
+
+**Remedy:** Use IntersectionObserver or native scroll timelines, animate only `transform`/`opacity`, feature-detect `document.startViewTransition`, and consult [csstriggers.com](https://csstriggers.com/) before introducing motion. Ban `transition: all`.
 
 ### Performance regressions that sneak into launch
 
