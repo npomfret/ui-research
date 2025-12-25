@@ -58,6 +58,52 @@ Pair media queries with runtime controls, test with OS-level reduce-motion setti
 *   **View Transition API:** Same-document transitions are Baseline Newly Available in 2025 (Chrome 111+, Safari TP, Firefox 144), and cross-document transitions ship in Chrome 126+. Use `document.startViewTransition`, `view-transition-class`, and nested `::view-transition-group` pseudos to morph layouts while keeping DOM updates atomic.
 *   **Scoped view transitions & DevTools:** Chrome 139+ surfaces `view-transition-class` rules in DevTools, Chrome 140 adds nested groups, and Chrome 142 introduces `document.activeViewTransition`. Embrace these tools to debug layering, clipping, and performance before committing to bespoke FLIP code.
 
+```css
+/* timeline-scope lets one timeline control multiple descendants */
+.feature-section {
+  timeline-scope: --cards, --progress;
+}
+
+@scroll-timeline --cards {
+  source: selector(.feature-section);
+  orientation: block;
+}
+
+.feature-card {
+  animation: float-in 0.8s var(--motion-emphasized) both;
+  animation-timeline: --cards;
+  animation-range: entry 10% exit 70%;
+}
+
+@keyframes float-in {
+  from { opacity: 0; transform: translateY(40px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+```
+
+```javascript
+// View transition with runtime hooks + reduced-motion guard
+const supportsViewTransitions = typeof document.startViewTransition === 'function';
+
+if (supportsViewTransitions) {
+  document.querySelectorAll('a[href^=\"/\"]').forEach(link => {
+    link.addEventListener('click', (event) => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      event.preventDefault();
+      const url = new URL(link.href, location.origin);
+
+      const transition = document.startViewTransition(async () => {
+        await router.navigate(url.pathname);
+      });
+
+      transition.ready.then(() => console.log('transition ready'));
+      transition.finished.finally(() => console.log('transition complete'));
+    });
+  });
+}
+```
+
 ##### Implementation Checklist for Talented Web Devs
 
 1. **Start with motion tokens:** Treat common keyframes as design tokens so multiple teams reuse the same easing, duration, and reduced-motion variants instead of copying bespoke snippets.

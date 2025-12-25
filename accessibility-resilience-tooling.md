@@ -44,6 +44,24 @@ prefersReducedMotion.addEventListener('change', handleMotionPreference);
 **References:**
 - [WCAG 2.1: Animation from Interactions](https://www.w3.org/WAI/WCAG21/Understanding/animation-from-interactions.html) - Compliance requirement
 - [A11y Project: prefers-reduced-motion](https://www.a11yproject.com/posts/understanding-vestibular-disorders/) - Why it matters
+- [Chromatic: Animation Testing](https://www.chromatic.com/docs/animation-testing) - Visual regression strategy for motion-heavy components
+- [Chrome DevTools Recorder: Scroll-driven animations](https://developer.chrome.com/docs/devtools/recorder/scroll-driven-animations/) - Profiling timelines & dropped frames
+
+### Motion QA & verification
+
+**Why:** Animations regress silently. Treat motion like any other critical surface—automate tests, record timelines, and verify reduced-motion fallbacks.
+
+**Checklist:**
+- Enable Chromatic/Playwright snapshot tests that either pause animations (Chromatic “Disable CSS animations” add-on) or capture video so motion changes surface in PR reviews.
+- Profile scroll timelines and view transitions in Chrome DevTools’ Animations + Recorder panels under CPU/GPU throttling to catch frames dropping below 60fps.
+- Install Chrome’s [Animation Policy](https://chromewebstore.google.com/detail/animation-policy/ncigbofjfbodhkaffojakplpmnleeoee) extension (or use DevTools Rendering pane) to pause/slow CSS animations instantly during manual testing.
+- In integration tests, feature-detect `document.startViewTransition` / `CSS.supports('animation-timeline: scroll()')` and assert both the enhanced and fallback flows render correctly.
+- Exercise runtime “Reduce motion” toggles with Cypress/Playwright—flip the toggle mid-test and ensure `animation-play-state` switches to `paused`, scroll timelines stop, and view transitions short-circuit.
+
+**Artifacts to attach to reviews:**
+- DevTools performance trace (with `prefers-reduced-motion` on/off) showing no layout thrash.
+- Before/after Chromatic snapshots for key animated components.
+- Video capture of view transitions proving they respect the accessibility toggle.
 
 ### Progressive enhancement with @supports
 
