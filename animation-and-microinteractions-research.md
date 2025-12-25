@@ -21,16 +21,31 @@ Effective UI animation is not about adding motion for its own sake. It's about a
 
 *   **Purposeful:** Every animation should have a clear goal, such as guiding the user, providing feedback, or indicating a change in state.
 *   **Timing and Easing:**
-    *   **Duration:** Animations should be fast enough not to cause delays but slow enough to be perceived. The sweet spot is typically between 200 and 500 milliseconds.
-    *   **Easing:** Animations should mimic real-world physics by accelerating and decelerating (easing in and out) to feel more natural.
+    *   **Duration:** Animations should be fast enough not to cause delays but slow enough to be perceived. The sweet spot is typically between 200 and 500 milliseconds, aligning with Apple’s 2024 Human Interface Guidelines (≈200 ms for components, ≈400 ms for full-screen views).
+    *   **Easing:** Animations should mimic real-world physics by accelerating and decelerating (easing in and out) to feel more natural. Material Design 3’s Standard/Emphasized/Legacy curves are good baselines for consistent motion language.
 *   **Consistency:** A consistent animation style throughout the interface builds predictability and makes the application feel polished.
 *   **Subtlety:** The best animations are often understated. Overly flashy or complex animations can be distracting and annoying.
 *   **Performance:** Animations must be smooth and performant. "Janky" or lagging animations can be worse than no animation at all.
-*   **Accessibility:** Always consider users with motion sensitivities. Provide an option to reduce or disable motion.
+*   **Accessibility:** Always consider users with motion sensitivities. Detect `prefers-reduced-motion`, expose a manual “reduce motion” toggle, and document how to pause or replace animation sequences.
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .scroll-story {
+    animation: none;
+    transform: none;
+  }
+  .looping-visual {
+    animation-play-state: paused;
+  }
+}
+```
+
+Pair media queries with runtime controls, test with OS-level reduce-motion settings, and ensure compliance with WCAG 2.3.3 / WCAG 2.3. Let users re-enable motion if they opt in.
 
 #### 4. Modern Techniques and Best Practices
 
-*   **Scroll-triggered animations:** Use these to create a narrative and guide users down a page.
+*   **Scroll-triggered animations:** Use these to create a narrative and guide users down a page. Native CSS scroll-driven animations let you bind motion to `@scroll-timeline`/`animation-timeline` without custom JavaScript timelines.
+*   **View transitions:** The View Transitions API captures before/after states so you can morph DOM or page navigation changes without writing FLIP orchestration.
 *   **Stateful transitions:** Animate changes in an element's state (e.g., a button press, a form submission) to provide clear feedback.
 *   **Hover effects:** Use subtle hover animations to indicate interactivity.
 *   **Loading animations:** Transform waiting times into more engaging experiences with creative loaders.
@@ -46,7 +61,7 @@ Effective UI animation is not about adding motion for its own sake. It's about a
 
 #### 6. Inspirational Examples
 
-*   **Social Media:** The "like" and "share" animations on platforms like Twitter and Instagram.
+*   **Social Media:** The "like" and "share" animations on platforms like X (formerly Twitter) and Instagram.
 *   **Forms:** Real-time validation feedback in modern web forms.
 *   **E-commerce:** The animation of an item being added to a shopping cart.
 *   **Mobile Apps:** The "pull-to-refresh" animation in many mobile apps.
