@@ -6,7 +6,13 @@ This document summarizes research into emerging technologies and modern best pra
 
 Based on initial research, the following trends are at the forefront of modern web development:
 
-*   **AI-Driven Web Experiences:** Artificial Intelligence (AI) and Machine Learning (ML) are being integrated into web applications to provide personalized content, power generative UI, and create more intelligent chatbots. AI is also being used to automate development tasks like code generation and testing.
+*   **AI-Driven Web Experiences:** Artificial Intelligence (AI) and Machine Learning (ML) are being integrated into web applications to provide personalized content, power generative UI, and create more intelligent chatbots. AI is also being used to automate development tasks like code generation and testing. Vercel’s AI SDK 4.1 (January 20, 2025) added image generation, non-blocking streams, and structured-output tooling; the 5.0 release (July 31, 2025) delivered type-safe tool invocations, SSE-based streaming, and full support for Vue, Svelte, and Angular; and the August 6, 2025 “AI Elements” component kit supplies prebuilt chat, reasoning, and tool UI built on shadcn/ui.citeturn0search3turn0search1turn0search2
+
+    **Implementation checklist for Generative UI pilots**
+    *   Ship AI UIs as **server components first** to keep payloads small; fall back to plain markdown/chat when React Server Components aren’t available in your stack yet.
+    *   Enforce **tool schema typing** (AI SDK 5) so streaming tool calls can render partially without throwing; log tool errors separately from LLM responses for observability.
+    *   Gate deployments behind **AI Elements** or similar design tokens to preserve brand language when LLMs decide layout.
+    *   Budget guardrails: force AI agents to stay within a whitelist of components (tabs, charts, form sections) and use `view-transition-name` to prevent flashes when the LLM swaps layouts mid-stream.
 
     A major development in this area is the rise of **Generative UI**, where interfaces are dynamically created and adapted by AI agents in real-time. This is a shift from pre-defined, static UIs to fluid, context-aware experiences.
 
@@ -56,7 +62,7 @@ Based on initial research, the following trends are at the forefront of modern w
     *   **Advantages:** Near-instant load times, minimal JavaScript execution on the client, and excellent performance.
     *   **Disadvantages:** As a newer framework, it has a small community and a different mental model that can take some time to learn.
 
-*   **Modern CSS Features:** CSS is evolving at a rapid pace, with new features that allow for more sophisticated designs and interactions with less reliance on JavaScript.
+*   **Modern CSS Features:** CSS is evolving at a rapid pace, with new features that allow for more sophisticated designs and interactions with less reliance on JavaScript. Chrome 145 (arriving February 2026) adds declarative **scroll-triggered animations** via `animation-trigger`/`timeline-trigger`, reducing the need for custom `IntersectionObserver` plumbing; until then, scroll-driven animations powered by `@scroll-timeline` and `animation-timeline` are baseline features across Chromium, Safari 26+, and other modern engines.citeturn0search0turn0search2
 
     ### Layout and Responsive Design
     *   **Container Queries:** Allow elements to be styled based on the size of their parent container, rather than the viewport. This is a major step forward for component-based design.
@@ -98,7 +104,7 @@ Based on initial research, the following trends are at the forefront of modern w
         *   **Higher Cost:** Initial development and maintenance can be more expensive due to the need for more specialized skills and infrastructure.
     *   **Popular Headless CMS Platforms:** [Contentful](https://www.contentful.com/), [Strapi](https://strapi.io/), [Sanity](https://www.sanity.io/), [Hygraph](https://hygraph.com/), [Prismic](https://prismic.io/).
 
-*   **WebAssembly (Wasm):** [WebAssembly](https://webassembly.org/) is a new type of code that can be run in modern web browsers — it is a low-level assembly-like language with a compact binary format that runs with near-native performance and provides languages such as C/C++, C# and Rust with a compilation target so that they can run on the web.
+*   **WebAssembly (Wasm):** [WebAssembly](https://webassembly.org/) is a new type of code that can be run in modern web browsers — it is a low-level assembly-like language with a compact binary format that runs with near-native performance and provides languages such as C/C++, C# and Rust with a compilation target so that they can run on the web. Wasm “3.0” (finalized September 17, 2025) landed across Chrome, Firefox, Safari, and Edge with garbage collection, typed references, exception handling, 64-bit memory, tail calls, and relaxed SIMD—all the features enterprise teams cited as blockers. Treat 2026 roadmaps as “Wasm-ready” by default: choose GC-backed runtimes if you want to write UI logic once and target both browser and Wasm edge runtimes.citeturn3search0turn3search1
 
     ### Key Use Cases
     *   **High-Performance Computation:** Wasm is ideal for computationally intensive tasks like video and audio processing, scientific simulations, and data analysis.
@@ -128,7 +134,7 @@ Based on initial research, the following trends are at the forefront of modern w
     *   **Improved Push Notifications:** Push notifications will become more powerful, with support for rich content and more interactive features.
     *   **AI-Powered Experiences:** AI will be used to create more personalized and intelligent PWAs, with features like predictive content delivery and AI-powered chatbots.
 
-*   **Edge Computing:** [Edge computing](https://www.cloudflare.com/learning/serverless/what-is-edge-computing/) is a distributed computing paradigm that brings computation and data storage closer to the sources of data. In the context of web applications, this means processing data on a server that is geographically closer to the user, rather than on a centralized server that could be thousands of miles away.
+*   **Edge Computing:** [Edge computing](https://www.cloudflare.com/learning/serverless/what-is-edge-computing/) is a distributed computing paradigm that brings computation and data storage closer to the sources of data. In the context of web applications, this means processing data on a server that is geographically closer to the user, rather than on a centralized server that could be thousands of miles away. Cloudflare’s November 25, 2025 Workers changelog bumped the runtime to V8 14.3 and raised the WebSocket message ceiling to 32 MiB, clearing long-standing blockers for streaming AI and collaborative editing workloads; the April 8, 2025 OpenNext adapter meanwhile lets full-featured Next.js 14/15 apps run in Workers with Node-compatible APIs.citeturn2search0turn2search1
 
     ### Key Benefits
     *   **Reduced Latency:** By minimizing the distance that data has to travel, edge computing can significantly reduce latency and improve the responsiveness of web applications.
@@ -158,7 +164,12 @@ Based on initial research, the following trends are at the forefront of modern w
     *   **Development Environments:** [Hardhat](https://hardhat.org/) and [Truffle](https://trufflesuite.com/) are popular development environments for building, testing, and deploying smart contracts.
     *   **Wallets:** [MetaMask](https://metamask.io/) and other Web3 wallets allow users to store their cryptocurrency and interact with dApps.
 
-*   **Sustainable Web Development:** [Sustainable web development](https://www.wholegraindigital.com/blog/website-sustainability/) is an approach to creating and maintaining websites that minimizes their environmental impact. The internet has a significant carbon footprint, and sustainable web development aims to reduce it by focusing on performance, efficiency, and responsible hosting.
+*   **Sustainable Web Development:** [Sustainable web development](https://www.wholegraindigital.com/blog/website-sustainability/) is an approach to creating and maintaining websites that minimizes their environmental impact. The internet has a significant carbon footprint, and sustainable web development aims to reduce it by focusing on performance, efficiency, and responsible hosting. The W3C Sustainable Web Interest Group (chartered October 2024) is shepherding the Web Sustainability Guidelines (WSG) toward a 2026 W3C Note; the October 2, 2025 Draft Note details 92 guidelines and 254 success criteria spanning UX, infrastructure, and reporting with filterable metrics for energy, water, and emissions. Use those materials to align sprints with measurable KPIs and cite the guidance in ESG reports, especially as U.S. regulators consider rolling back mandatory emissions reporting (EPA proposal, September 12, 2025).citeturn1search0turn4search0turn1news12
+
+    ### Practical adoption plan (Q1 2026)
+    1. Map every surface in `workflow/audit-checklist.md` to a WSG criterion (e.g., Phase 7 “CSS triggers audit” → WSG Performance KPIs) so compliance is baked into existing QA.citeturn4search0
+    2. Use the WSG’s Sustainable Tooling and Reporting (STAR) supplement and its filterable checklist to quantify route-level emissions, energy, and water budgets alongside Core Web Vitals dashboards.citeturn4search0
+    3. Align procurement with WSG Hosting & Infrastructure guidance—choose green hosting or edge providers publishing PUE/WUE metrics and document it in release notes to counter transparency gaps if national reporting rules weaken.citeturn4search0turn1news12
 
     ### Key Best Practices
     *   **Performance Optimization:** Faster websites are more sustainable because they consume less energy. This includes optimizing images, using modern image formats like WebP, minifying CSS and JavaScript, and leveraging browser caching.
