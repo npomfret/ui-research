@@ -51,13 +51,38 @@ Pair media queries with runtime controls, test with OS-level reduce-motion setti
 *   **Loading animations:** Transform waiting times into more engaging experiences with creative loaders.
 *   **Tell a story:** Use animation to create a visual narrative that guides the user's eye and explains relationships between elements.
 
+##### Native Motion Stack (2025)
+
+*   **CSS scroll-driven animations:** Chrome, Edge, and Safari 17.4+ ship `@scroll-timeline`, `animation-timeline`, and `animation-range` so a scroll container can directly scrub keyframes; Firefox is implementing the same API as part of Interop 2025. Lean on these before writing custom scroll listeners, and scope timelines with `timeline-scope` if you need multiple narratives on one page.
+*   **Scroll-triggered animations:** Starting in Chrome 145 (early 2026), you can declaratively fire time-based animations with `@scroll-timeline` triggers—ideal for once-per-section reveals without plumbing `IntersectionObserver`. Design the timeline now, then polyfill or progressively enhance as the feature lands.
+*   **View Transition API:** Same-document transitions are Baseline Newly Available in 2025 (Chrome 111+, Safari TP, Firefox 144), and cross-document transitions ship in Chrome 126+. Use `document.startViewTransition`, `view-transition-class`, and nested `::view-transition-group` pseudos to morph layouts while keeping DOM updates atomic.
+*   **Scoped view transitions & DevTools:** Chrome 139+ surfaces `view-transition-class` rules in DevTools, Chrome 140 adds nested groups, and Chrome 142 introduces `document.activeViewTransition`. Embrace these tools to debug layering, clipping, and performance before committing to bespoke FLIP code.
+
+##### Implementation Checklist for Talented Web Devs
+
+1. **Start with motion tokens:** Treat common keyframes as design tokens so multiple teams reuse the same easing, duration, and reduced-motion variants instead of copying bespoke snippets.
+2. **Prefer GPU-friendly properties:** Animate `opacity`, `transform`, `filter`, and CSS variables tied to those properties; avoid animating layout properties (width, height, top/left) unless absolutely necessary.
+3. **Budget motion density:** Limit major animations to one focal element per viewport and keep micro-interactions under ≈300 ms to avoid overwhelming users.
+4. **Design for reduction and opt-in:** Ship `prefers-reduced-motion` handling plus a visible toggle; pause long-running loops on hover/focus and let users re-enable motion if desired.
+5. **Instrument performance:** Test scroll-driven timelines on low-end mobile hardware, track dropped frames with DevTools’ Performance panel, and profile view transitions with the Animations tab so you can catch paint thrash early.
+6. **Plan fallbacks:** Wrap every view transition in progressive enhancement (feature-detect `document.startViewTransition`), and ensure your narrative still lands when scroll timelines aren’t supported.
+
 #### 5. Common Pitfalls and Anti-Patterns to Avoid
 
-*   **Over-animation:** Too much motion can be overwhelming and distracting.
-*   **Slow animations:** Animations that take too long can make the interface feel sluggish.
-*   **Inconsistency:** Varying animation styles can confuse users and make the interface feel disjointed.
-*   **Ignoring performance:** "Janky" animations can be frustrating and make the application feel broken.
-*   **Forgetting accessibility:** Failing to provide options for users with motion sensitivities can make your application unusable for some.
+*   **Over-animation:** Too much simultaneous motion (or long sequences over 500 ms) overwhelms the eye and makes it harder to parse hierarchy. Use animation sparingly and stagger complex sequences.
+*   **Animating layout properties:** Tweaking `top`, `left`, `width`, or `height` forces layout and paint every frame. Stick to transforms/opacity or use the View Transition API so the browser handles the diffing work for you.
+*   **`overflow: hidden` on animated parents:** Clipping animated children breaks drop shadows and view transitions. Use masks, `clip-path`, or nested wrappers when you need reveal effects.
+*   **Ignoring performance budgets:** Animations that jank on low-end devices hurt trust. Test on throttled CPUs/GPUs, profile scroll timelines, and avoid nested compositing layers created by gratuitous `will-change`.
+*   **Blocking user input:** Modal or page transitions that disable scroll, trap focus, or delay action completion past 200 ms frustrate power users. Keep interactions responsive while motion plays.
+*   **Accessibility misses:** Failing to respect `prefers-reduced-motion`, skipping manual toggles, or letting loops auto-play forever will cause motion sickness for some users and violate WCAG 2.3.x.
+*   **No fallback for experimental APIs:** View transitions, scroll timelines, and other emerging features must be additive. Feature-detect and gracefully degrade to static states to avoid blank screens on unsupported browsers.
+
+##### Testing & QA Playbook
+
+*   **Test both enhanced and fallback paths:** Feature-detect scroll timelines or `document.startViewTransition` in your tests so you can assert that both the declarative and fallback experiences behave correctly.
+*   **Use DevTools motion inspectors:** Chrome’s Animations panel now lists scroll timelines and view-transition stages, letting you scrub progress, detect clipping, and profile paints. Record sessions on throttled CPUs to reveal jank.
+*   **Automate visual regression checks:** Capture before/after screenshots (e.g., Storybook + Chromatic) whenever you touch motion tokens; view transitions make DOM updates atomic, so diffing frames catches regressions the code review won’t see.
+*   **Include accessibility smoke tests:** Run OS-level “Reduce motion” toggles, keyboard navigation, and screen reader passes to ensure animation-driven affordances remain discoverable when motion is disabled.
 
 #### 6. Inspirational Examples
 

@@ -16,6 +16,7 @@ A condensed field guide for engineers who need to ship cinematic, high-trust web
 - [Conclusion](./conclusion.md) — why the discipline pays off and how to socialize these standards with stakeholders.
 
 ### Supplemental Research Files
+- [inspirational-website-designs.md](./inspirational-website-designs.md) — a curated list of websites that showcase best-in-class design and provide inspiration for modern UI/UX.
 - [animation-and-microinteractions-research.md](./animation-and-microinteractions-research.md) — a deep dive into the principles, best practices, and tools for creating effective UI animations and micro-interactions.
 - [glassmorphism-research.md](./glassmorphism-research.md) — deep dive on atmospheric materials, cursor/scroll dynamics, and inspiration pulled from visionOS.
 - [modern-ui-libraries.md](./modern-ui-libraries.md) — curated tooling list (animation engines, headless UI kits, state libraries, and WebGL helpers) for when you need production-ready building blocks.
