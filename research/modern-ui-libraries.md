@@ -2,7 +2,7 @@
 
 This document provides a curated list of modern JavaScript libraries and tools that are highly relevant for building next-generation user interfaces. The focus is on libraries that are performant, provide an excellent developer experience, and enable the creation of the advanced UI patterns we've researched.
 
-> Use this alongside [accessibility-resilience-tooling.md](./accessibility-resilience-tooling.md): that note covers principles, while this appendix points to ecosystem options when you decide to buy vs. build.
+> Use this alongside [`systems/accessibility-resilience.md`](../systems/accessibility-resilience.md): that note covers principles, while this appendix points to ecosystem options when you decide to buy vs. build.
 
 ---
 

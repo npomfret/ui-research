@@ -1,6 +1,6 @@
 # Research: Ultra-Modern Glassmorphism and Interactive UI
 
-> This appendix extends the “Surfaces, Depth, and Hierarchy” note. Read [surfaces-depth.md](./surfaces-depth.md) for the canonical implementation guidelines; use this file when you need deeper experiments, motion-driven variations, or inspiration references that haven't been productionized yet.
+> This appendix extends the “Surfaces, Depth, and Hierarchy” note. Read [`systems/layout-and-surfaces.md`](../systems/layout-and-surfaces.md) for the canonical implementation guidelines; use this file when you need deeper experiments, motion-driven variations, or inspiration references that haven't been productionized yet.
 
 This document summarizes research into modern "glassmorphism" UI techniques, with a focus on creating interactive and dynamic effects inspired by Apple's design language (including visionOS).
 
@@ -39,7 +39,7 @@ Apple’s “Liquid Glass” direction (visionOS, iOS 18) treats glass panels li
 - **Context-aware blur:** increase `backdrop-filter` blur as surfaces move closer to the viewer (`transform: translateZ()` in 3D scenes or `scale()` for 2.5D), but cap at ~30px to preserve legibility.
 - **Navigation chroma:** apply subtle hue shifts tied to active sections (e.g., `data-section` attribute driving `color-mix()`), so tabs look “lit up” by the content they control.
 
-Keep these effects optional—detect GPU/OS support and fall back to the baseline recipes in `surfaces-depth.md` when reduced motion or low-power mode is enabled.
+Keep these effects optional—detect GPU/OS support and fall back to the baseline recipes in [`systems/layout-and-surfaces.md`](../systems/layout-and-surfaces.md) when reduced motion or low-power mode is enabled.
 
 ### Scroll-Based Background Distortion
 

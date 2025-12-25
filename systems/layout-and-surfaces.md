@@ -1,10 +1,21 @@
-## Surfaces, Depth, and Hierarchy
+## Layout & Surfaces System
 
-### Glassmorphism with restraint
+The structural layer of this design language has two responsibilities:
+
+1. **Surfaces, depth, and hierarchy** — how cards, banners, and micro-components express elevation (originally `surfaces-depth.md`).
+2. **Layout primitives** — the container/grid utilities every page composes (originally `layout-system.md`).
+
+The sections below keep both perspectives intact, with minimal editing so you can continue to copy existing recipes.
+
+---
+
+### Part 1 — Surfaces, Depth, and Hierarchy
+
+#### Glassmorphism with restraint
 
 **Why:** A frosted card instantly communicates elevation and interaction priority. Glassmorphism creates visual hierarchy through transparency and blur—foreground elements feel physically "above" the background. But restraint is critical: if everything is glass, nothing stands out.
 
-> Want to push beyond the baseline recipes here? See [`glassmorphism-research.md`](./glassmorphism-research.md) for supplemental experiments (scroll-reactive blur, cursor-driven auroras, visionOS-inspired depth) and inspiration sources.
+> Want to push beyond the baseline recipes here? See [`research/glassmorphism.md`](../research/glassmorphism.md) for supplemental experiments (scroll-reactive blur, cursor-driven auroras, visionOS-inspired depth) and inspiration sources.
 
 **How:**
 ```css
@@ -41,7 +52,7 @@
 }
 ```
 
-**Why 24px blur?** Smaller values (≤12px) look pixelated; larger values (≥40px) obscure content. 20-30px is the sweet spot for readability over complex backgrounds.
+**Why 24px blur?** Smaller values (≤12px) look pixelated; larger values (≥40px) obscure content. 20–30px is the sweet spot for readability over complex backgrounds.
 
 **The pointer-events gotcha:** We spent an hour debugging "buttons not working" because `.glass-panel::after` covered interactive elements. Always set `pointer-events: none` on decorative overlays. This is the #1 glassmorphism bug in production.
 
@@ -51,15 +62,7 @@
 - Overlays without `pointer-events: none` (blocks all interaction)
 - Using blur on elements that animate or scroll (causes stuttering)
 
-**Browser support:** `backdrop-filter` is ~94% global support as of 2024 but requires `-webkit-` prefix for Safari. Always test fallback on Firefox ESR.
-
-**References:**
-- [MDN: backdrop-filter](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter) - Browser support and syntax
-- [Can I Use: backdrop-filter](https://caniuse.com/css-backdrop-filter) - Current browser support
-- [Glassmorphism Generator](https://hype4.academy/tools/glassmorphism-generator) - Visual tool for tuning parameters
-- [Apple Human Interface Guidelines: Materials](https://developer.apple.com/design/human-interface-guidelines/materials) - Source of glassmorphism design language
-
-### Status-aware micro components
+#### Status-aware micro components
 
 **Why:** Small, repeatable badges and alerts reduce bespoke CSS and keep state changes obvious. Status indicators are the "LEDs" of your UI—they should be instantly scannable without reading text.
 
@@ -101,7 +104,7 @@
 }
 ```
 
-**Design principle:** Use color + text, never color alone (WCAG 2.1 requirement). "Ready" status should be green AND say "Ready" for colorblind users.
+**Design principle:** Use color + text, never color alone (WCAG requirement). "Ready" status should be green AND say "Ready" for colorblind users.
 
 **DOM manipulation:** Toggle classes, don't mutate inline styles:
 ```javascript
@@ -114,13 +117,75 @@ element.style.display = 'none';
 element.style.color = '#f43f5e';
 ```
 
-**Anti-patterns:**
-- Custom inline color tweaks (impossible to theme or audit)
-- Using color as the only status indicator (fails accessibility)
-- Decorative pseudo-elements without `pointer-events: none`
-- Relying on JavaScript for state that CSS classes can handle
+---
 
-**References:**
-- [WCAG 2.1: Use of Color](https://www.w3.org/WAI/WCAG21/Understanding/use-of-color.html) - Why color alone isn't enough
-- [Tailwind Status Colors](https://tailwindcss.com/docs/customizing-colors#color-palette-reference) - Well-designed semantic color system
-- [Inclusive Components: Notifications](https://inclusive-components.design/notifications/) - Accessible alert patterns
+### Part 2 — Layout System & Responsive Strategy
+
+#### Container primitives
+
+**Why:** Reusable layout primitives eliminate "one-off" containers that drift over time. Define your grid and spacing system once, compose everywhere.
+
+**How:**
+```css
+/* Main container with sensible width constraints */
+.page-shell {
+  position: relative;
+  z-index: 1;
+  width: min(1200px, 95vw);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+/* Auto-responsive grids */
+.split-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.75rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.25rem;
+}
+
+/* Utility classes for flex layouts */
+.flex { display: flex; }
+.flex-column { flex-direction: column; }
+.align-center { align-items: center; }
+.gap-md { gap: 1rem; }
+```
+
+#### Responsive strategy
+
+**Why:** Fluid dimensions via `clamp()` and intrinsic grids eliminate 90% of breakpoints.
+
+**How:**
+```css
+h1 {
+  font-size: clamp(2.5rem, 5vw, 3.75rem);
+  line-height: 1.05;
+}
+
+body {
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+@media (max-width: 768px) {
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .button-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+```
+
+#### Bento grid layouts
+
+Use `grid-auto-rows` to create a rhythm, span standout panels with utility classes (e.g., `.wide`, `.tall`), and collapse spans under ~768px so cards stack in DOM order. Progressive enhancement ensures browsers without `subgrid` still see a clean stacked layout.

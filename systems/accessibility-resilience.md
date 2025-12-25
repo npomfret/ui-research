@@ -1,5 +1,7 @@
 ## Accessibility, Resilience & Tooling
 
+> Need the full reviewer artifact list? See [`quality/motion-qa.md`](../quality/motion-qa.md).
+
 ### Motion and accessibility preferences
 
 **Why:** ~35% of users experience motion sensitivity, and WCAG 2.1 Level AA requires respecting `prefers-reduced-motion`. Failing this isn't just bad UX—it can trigger nausea, migraines, or seizures.
