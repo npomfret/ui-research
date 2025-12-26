@@ -1,6 +1,6 @@
 ### Showcase of Exceptional Websites
 
-This document showcases a curated list of websites that are frequently cited for their exceptional design. These examples embody the "best-in-class" ideas in modern web design and are excellent sources of inspiration.
+This document showcases a curated list of websites that are frequently cited for their exceptional design. These examples embody the "best-in-class" ideas in modern web design and are excellent sources of inspiration. Recent in-house Playwright captures live in `inspiration/screenshots/` for quick offline reference.
 
 #### Key Trends in Modern Web Design
 

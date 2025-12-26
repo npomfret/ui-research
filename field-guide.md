@@ -97,6 +97,8 @@ For living examples, see the expanded case studies in [`inspiration/inspirationa
 | --- | --- |
 | [`inspiration/inspirational-sites.md`](./inspiration/inspirational-sites.md) | Tagged gallery of production-grade sites worth dissecting. |
 
+Refresh the local gallery by running `node scripts/capture-award-screenshots.mjs` (requires Playwright). Screenshots land in `inspiration/screenshots/` for offline reference.
+
 ## 7. Workflow & Adoption (`/workflow`)
 
 | File | Contents |

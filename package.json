@@ -1,0 +1,24 @@
+{
+  "name": "ui-research",
+  "version": "1.0.0",
+  "description": "This repo is a living handbook for building cinematic, resilient web interfaces. Every markdown file captures hard-won patterns—tokens, motion systems, QA checklists, and research dossiers—so engineers can copy proven solutions instead of reinventing them.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "screenshots": "node scripts/capture-award-screenshots.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npomfret/ui-research.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/npomfret/ui-research/issues"
+  },
+  "homepage": "https://github.com/npomfret/ui-research#readme",
+  "devDependencies": {
+    "playwright": "^1.57.0"
+  }
+}
