@@ -29,6 +29,7 @@ This repo is now organized around the workflows senior UI engineers actually fol
 | File | Focus |
 | --- | --- |
 | [`research/animations-and-microinteractions.md`](./research/animations-and-microinteractions.md) | Native scroll/view-transition techniques, timeline-scope, API primers. |
+| [`research/mobile-first-flows-and-overlays.md`](./research/mobile-first-flows-and-overlays.md) | Mobile route-first IA, fullscreen/sheet/dialog overlay taxonomy, and flow simplification patterns. |
 | [`research/glassmorphism.md`](./research/glassmorphism.md) | Atmospheric materials, cursor/scroll dynamics, inspiration pulls. |
 | [`research/modern-ui-libraries.md`](./research/modern-ui-libraries.md) | Curated tooling list: animation engines, headless kits, WebGL helpers. |
 | [`research/emerging-web-technologies.md`](./research/emerging-web-technologies.md) | Signals on AI-native UI, Wasm 3.0, edge runtimes, sustainability mandates. |
