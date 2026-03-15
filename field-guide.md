@@ -29,6 +29,7 @@ This repo is now organized around the workflows senior UI engineers actually fol
 | File | Focus |
 | --- | --- |
 | [`research/animations-and-microinteractions.md`](./research/animations-and-microinteractions.md) | Native scroll/view-transition techniques, timeline-scope, API primers. |
+| [`research/in-browser-app-state-management.md`](./research/in-browser-app-state-management.md) | Auth/session, API cache, websocket/SSE, cross-tab sync, and logout teardown patterns. |
 | [`research/mobile-first-flows-and-overlays.md`](./research/mobile-first-flows-and-overlays.md) | Mobile route-first IA, fullscreen/sheet/dialog overlay taxonomy, and flow simplification patterns. |
 | [`research/glassmorphism.md`](./research/glassmorphism.md) | Atmospheric materials, cursor/scroll dynamics, inspiration pulls. |
 | [`research/modern-ui-libraries.md`](./research/modern-ui-libraries.md) | Curated tooling list: animation engines, headless kits, WebGL helpers. |
@@ -111,6 +112,7 @@ Refresh the local gallery by running `node scripts/capture-award-screenshots.mjs
 | Goal | Jump to | Why |
 | --- | --- | --- |
 | “I need the design system primitives.” | `systems/` files | Tokens + layout + accessibility/resilience in one place. |
+| “I’m designing auth, API loading, or websocket flows.” | `research/in-browser-app-state-management.md` | Covers login bootstrap, cache strategy, realtime sync, logout teardown, and common failure modes. |
 | “I’m shipping a cinematic interaction.” | `interaction/motion-feedback.md` then `quality/motion-qa.md` | Pair implementation guidance with the QA artifacts you must deliver. |
 | “I want standout feature inspiration.” | Field Guide §5 + `inspiration/inspirational-sites.md` | See the four core patterns and the live sites that execute them. |
 | “I want new motion inspiration.” | `research/animations-and-microinteractions.md` + `inspiration/inspirational-sites.md` | Deep dives plus live examples. |
