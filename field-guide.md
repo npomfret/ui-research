@@ -28,6 +28,8 @@ This repo is now organized around the workflows senior UI engineers actually fol
 
 | File | Focus |
 | --- | --- |
+| [`research/core-principles.md`](./research/core-principles.md) | The fundamental "UI is how it looks; UX is how it works" philosophy. Core UI (Visual Hierarchy, Grids, Type) and Core UX (Affordances, Feedback, A11y). |
+| [`research/design-process.md`](./research/design-process.md) | The iterative lifecycle: User Flow, Wireframing, Design Systems, Prototyping, and Testing. |
 | [`research/animations-and-microinteractions.md`](./research/animations-and-microinteractions.md) | Native scroll/view-transition techniques, timeline-scope, API primers. |
 | [`research/in-browser-app-state-management.md`](./research/in-browser-app-state-management.md) | Auth/session, API cache, websocket/SSE, cross-tab sync, and logout teardown patterns. |
 | [`research/mobile-first-flows-and-overlays.md`](./research/mobile-first-flows-and-overlays.md) | Mobile route-first IA, fullscreen/sheet/dialog overlay taxonomy, and flow simplification patterns. |
@@ -112,6 +114,7 @@ Refresh the local gallery by running `node scripts/capture-award-screenshots.mjs
 | Goal | Jump to | Why |
 | --- | --- | --- |
 | “I need the design system primitives.” | `systems/` files | Tokens + layout + accessibility/resilience in one place. |
+| “I need the principles before touching code.” | `research/core-principles.md` + `research/design-process.md` | Grounds layout, semantics, testing, and handoff decisions in current accessibility and process guidance. |
 | “I’m designing auth, API loading, or websocket flows.” | `research/in-browser-app-state-management.md` | Covers login bootstrap, cache strategy, realtime sync, logout teardown, and common failure modes. |
 | “I’m shipping a cinematic interaction.” | `interaction/motion-feedback.md` then `quality/motion-qa.md` | Pair implementation guidance with the QA artifacts you must deliver. |
 | “I want standout feature inspiration.” | Field Guide §5 + `inspiration/inspirational-sites.md` | See the four core patterns and the live sites that execute them. |

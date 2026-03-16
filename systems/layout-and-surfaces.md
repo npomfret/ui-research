@@ -121,6 +121,15 @@ element.style.color = '#f43f5e';
 
 ### Part 2 — Layout System & Responsive Strategy
 
+#### Core UI layout principles
+
+**UI is how it looks; UX is how it works.** A well-structured layout is the foundation of both.
+
+- **Visual Hierarchy:** Direct attention using scale, weight, and scanning patterns. Design for the **Z-pattern** (simple layouts) or the **F-pattern** (text-heavy pages) to match how users naturally scan content.
+- **The 8pt Grid System:** All spacing and sizing should be in multiples of 8 (8, 16, 24, 32...). This ensures mathematical consistency across screen sizes and simplifies the handoff between design and engineering.
+- **Proximity & Alignment:** Group related items together using consistent whitespace. Consistent alignment (usually left-aligned) creates a clear "line" for the eye to follow, reducing cognitive load.
+- **Reflow First:** Ordinary content should still work without two-dimensional scrolling when users zoom to 400% and the viewport effectively narrows to 320 CSS pixels.
+
 #### Container primitives
 
 **Why:** Reusable layout primitives eliminate "one-off" containers that drift over time. Define your grid and spacing system once, compose everywhere.
@@ -186,6 +195,32 @@ body {
 }
 ```
 
+Use media queries for page-level shifts and container queries for reusable modules that appear in multiple contexts:
+```css
+.feature-cluster {
+  container-type: inline-size;
+  display: grid;
+  gap: 1rem;
+}
+
+@container (width > 42rem) {
+  .feature-cluster {
+    grid-template-columns: 1.3fr 1fr;
+    align-items: start;
+  }
+}
+```
+
+**Guardrails:**
+- Avoid fixed-height cards and `overflow: hidden` on text wrappers; they commonly fail 200% text resize by clipping labels and helper text.
+- If you use sticky toolbars or drawers, set scroll padding and test keyboard navigation so focus is never fully hidden behind chrome.
+
 #### Bento grid layouts
 
 Use `grid-auto-rows` to create a rhythm, span standout panels with utility classes (e.g., `.wide`, `.tall`), and collapse spans under ~768px so cards stack in DOM order. Progressive enhancement ensures browsers without `subgrid` still see a clean stacked layout.
+
+**References:**
+- [MDN: CSS container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_container_queries) - Component-level responsiveness beyond viewport breakpoints
+- [MDN: `container-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/container-type) - Declaring containment contexts for `@container`
+- [W3C: Understanding SC 1.4.10 Reflow](https://www.w3.org/WAI/WCAG21/Understanding/reflow) - 320 CSS px / 400% zoom layout requirement
+- [W3C: Understanding SC 1.4.4 Resize Text](https://www.w3.org/WAI/WCAG21/Understanding/resize-text) - 200% text enlargement without clipping

@@ -155,33 +155,85 @@ prefersReducedMotion.addEventListener('change', handleMotionPreference);
 
 **Why:** Consistent transitions create a cohesive "feel" across the entire interface. Users develop muscle memory for timing—when every button has different hover behavior, the UI feels janky even if each individual animation is polished.
 
-**How:**
+#### Essential button states
+
+Every interactive element should have distinct visual styles for its various states to provide immediate feedback.
+
+**1. Default (The baseline)**
+The standard appearance that establishes visual hierarchy and indicates clickability. Use shadows, borders, or colors to signal that the element is an interactive object (affordance).
+
+**2. Hover (The cursor focus)**
+Immediate feedback when a cursor moves over the element. 
+- **Best Practice:** Use a subtle color shift or a slight elevation change (e.g., `translateY(-2px)` with an increased shadow).
+- **Capability Check:** Gate hover-only styling behind `@media (hover: hover)` so touch devices do not get sticky faux-hover behavior.
+- **Timing:** Keep transitions between **150ms and 250ms**.
+
+**3. Active (The physical press)**
+Mimics a physical press, often achieved by slightly darkening the color or removing shadows to create a "depressed" effect. 
+- **Timing:** Very fast, typically **50ms to 100ms** to ensure it feels responsive.
+
+**4. Disabled (Unavailable state)**
+Indicates the action is currently unavailable. It should be visually distinct (often desaturated) but still visible for context.
+- **Best Practice:** For native form controls, use the HTML `disabled` attribute. Use `aria-disabled="true"` only when a custom control or discoverable control must stay in the focus order, and suppress activation in JavaScript.
+
+**5. Focus-visible (Keyboard location)**
+Not part of the visual "four state" shorthand, but mandatory in production. Keyboard users need a high-contrast focus indicator that is at least as obvious as hover.
+
+**Implementation Example:**
 ```css
-/* Single transition token for entire app */
-:root {
-  --transition: 320ms cubic-bezier(0.22, 1, 0.36, 1);
+.button {
+  --btn-bg: var(--accent-teal);
+  --btn-text: #fff;
+  
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: 
+    background 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
-/* Button hover states */
-.btn {
-  transition: transform 180ms ease, box-shadow 180ms ease;
+/* Hover state: slight lift and glow, only on devices that can really hover */
+@media (hover: hover) {
+  .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(52, 211, 153, 0.25);
+  }
 }
 
-.btn:hover {
-  transform: translateY(-2px) scale(1.01);
-  box-shadow: 0 15px 30px rgba(15, 23, 42, 0.35);
+/* Active state: "pressed" down */
+.button:active {
+  transform: translateY(0);
+  background: color-mix(in srgb, var(--btn-bg), #000 10%);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Tab hover states - same timing, different visual */
-.tab-btn {
-  transition: var(--transition);
+/* Disabled state: muted and unclickable */
+.button:disabled,
+.button.is-disabled,
+.button[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  filter: grayscale(0.5);
 }
 
-.tab-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--accent-teal);
+/* Focus-visible state: keyboard users need a strong location cue */
+.button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--btn-bg), #fff 35%);
+  outline-offset: 3px;
 }
 ```
+
+**Semantics note:** Native buttons should use `disabled`, which removes them from focus and blocks submission or clicks automatically. `aria-disabled` only communicates state to assistive technology; it does not actually disable behavior.
 
 **Why these easing curves?**
 - `cubic-bezier(0.22, 1, 0.36, 1)` - Natural "ease-out" that feels springy
@@ -195,6 +247,7 @@ prefersReducedMotion.addEventListener('change', handleMotionPreference);
 - Spectacular hover effects on some controls, none on others
 - Animating `box-shadow` alone (causes jitter)—combine with `transform`
 - Using `transition: all` (animates everything, kills performance)
+- Using `aria-disabled` on native buttons instead of the real `disabled` attribute
 - Hover effects on mobile (no hover state exists—use `:active` instead)
 
 **Accessibility note:** Ensure focus states are as prominent as hover states. Keyboard users deserve the same feedback as mouse users.
@@ -204,6 +257,9 @@ prefersReducedMotion.addEventListener('change', handleMotionPreference);
 - [Cubic-bezier.com](https://cubic-bezier.com/) - Visual easing function editor
 - [Val Head: Designing Safer Web Animation](https://alistapart.com/article/designing-safer-web-animation-for-motion-sensitivity/) - Motion sensitivity considerations
 - [Josh Comeau: Animated Buttons](https://www.joshwcomeau.com/animation/css-transitions/) - Deep dive on button animations
+- [MDN: `hover` media feature](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/hover) - Detect whether hover is a real input capability
+- [MDN: `aria-disabled`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-disabled) - When to use ARIA versus native disabled
+- [MDN: `:focus-visible`](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible) - Input-modality aware focus styling
 
 ### Native transition APIs (2025+)
 

@@ -2,26 +2,35 @@
 
 ### Design tokens first, pixels later
 
-**Why:** Centralized tokens (`--accent-teal`, `--radius-lg`, `--shadow-soft`) guarantee visual coherence and make global tweaks (e.g., brand color shifts) cheap. Tokens enable systematic design changes without find-and-replace hell. When your PM wants to "make it more purple," you change one variable instead of hunting through 40 files.
+**Why:** Centralized tokens guarantee visual coherence and make global tweaks cheap. Tokens enable systematic design changes without find-and-replace hell.
+
+- **Color Theory (60-30-10 Rule):** 60% dominant neutral (backgrounds), 30% secondary (components/borders), 10% accent (CTAs/links).
+- **Token Tiers:** Keep a small set of raw or system tokens, then map them into semantic tokens (`--surface-elevated`, `--text-muted`) and only then into component tokens when needed. That separation makes rebrands and theming survivable.
+- **Shadows as Affordance:** Use subtle, multi-layered shadows to create depth. Avoid pure black (`#000`); instead, use a darkened version of the background color for a natural look. Use large blurs and low opacity.
+- **Contrast:** Always verify contrast ratios against WCAG 2.1 AA standards (4.5:1 for normal text).
+- **Scale With Users:** Prefer rem-backed type and spacing tokens so browser zoom and user font settings enlarge the interface predictably.
 
 **How:**
 ```css
 :root {
-  /* Semantic color system */
-  --bg-base: #05060a;
-  --bg-elevated: rgba(9, 11, 25, 0.65);
+  /* Semantic color system (60-30-10) */
+  --bg-base: #05060a;                   /* 60% */
+  --bg-elevated: rgba(9, 11, 25, 0.65); /* 30% */
+  --accent-teal: #34d399;               /* 10% */
+  
   --glass-border: rgba(255, 255, 255, 0.07);
   --text-primary: #f8fafc;
   --text-muted: rgba(248, 250, 252, 0.7);
 
-  /* Accent palette */
-  --accent-teal: #34d399;
-  --accent-cyan: #22d3ee;
-
   /* Spatial system */
   --radius: 18px;
   --radius-lg: 28px;
-  --shadow-soft: 0 20px 45px rgba(5, 6, 10, 0.45);
+  
+  /* Natural multi-layered shadow */
+  --shadow-soft: 
+    0 4px 6px rgba(5, 6, 10, 0.1),
+    0 10px 20px rgba(5, 6, 10, 0.25),
+    0 20px 45px rgba(5, 6, 10, 0.4);
 
   /* Motion system */
   --transition: 320ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -34,15 +43,28 @@ font-size: clamp(1.5rem, 5vw, 3.5rem); /* min, preferred, max */
 padding: clamp(1.5rem, 4vw, 3rem);
 ```
 
+Layer tokens so every level has one job:
+```css
+:root {
+  --color-teal-400: #34d399;               /* raw/system token */
+  --surface-elevated: rgba(9, 11, 25, 0.65); /* semantic token */
+  --action-primary-bg: var(--color-teal-400); /* component token */
+}
+```
+
 **Anti-patterns:**
 - Mixing raw hex values (`#34d399`) with tokens in the same codebase
 - Defining tokens that never get used (lint for dead CSS variables)
+- Encoding literal hue and semantic role into the same token name (`--green-success-border`) so themes cannot change independently
 - Over-tokenizing (don't create `--button-hover-shadow-on-tuesday`)
 
 **Why this works:** Browsers optimize CSS custom property lookups. Tokens add negligible runtime cost while making theme switching, dark mode, and A/B testing trivial. See [CSS Custom Properties on MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) for performance characteristics.
 
 **References:**
 - [Design Tokens W3C Community Group](https://design-tokens.github.io/community-group/format/) - Cross-platform token format specification
+- [USWDS: Design tokens](https://designsystem.digital.gov/design-tokens/) - Practical token taxonomy for teams shipping real products
+- [USWDS: State color tokens](https://designsystem.digital.gov/design-tokens/color/state-tokens/) - Role-based state tokens instead of ad hoc color names
+- [USWDS: Shadow tokens](https://designsystem.digital.gov/design-tokens/shadow/) - Tokenized elevation scale with rem-backed output
 - [Style Dictionary](https://amzn.github.io/style-dictionary/) - Build system for design tokens
 - [Open Props](https://open-props.style/) - Modern token system you can adopt wholesale
 

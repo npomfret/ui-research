@@ -2,6 +2,41 @@
 
 > Need the full reviewer artifact list? See [`quality/motion-qa.md`](../quality/motion-qa.md).
 
+### Interactive element accessibility
+
+**Why:** Every user, regardless of ability or device, should be able to navigate and interact with the UI.
+
+#### Button accessibility
+- **Target Size:** WCAG 2.2 AA requires targets to be at least **24x24 CSS pixels** or sufficiently spaced from nearby targets. For primary and high-risk actions, aim for **44x44 CSS pixels** when space allows.
+- **Semantic HTML:** Always use the `<button>` element for actions and `<a>` for navigation. This provides built-in keyboard support (`Enter` and `Space` to activate).
+- **Labels:** Avoid icon-only buttons whenever possible. If an icon stands alone, provide an accessible name with visible text, `aria-label`, or `aria-labelledby`; do not rely on `title` alone.
+- **States:** Focus states must be highly visible and meet a minimum 3:1 contrast ratio. Use a high-contrast ring or outline, and ensure sticky headers, toasts, and drawers never fully obscure the focused element.
+- **Zoom Checks:** Verify controls and labels still work at 200% text resize and 400% zoom / 320 CSS px reflow.
+
+```html
+<!-- Good: Semantic and labeled -->
+<button class="btn" aria-label="Close modal">
+  <svg>...</svg>
+</button>
+
+<!-- Bad: Non-semantic and unlabeled -->
+<div class="clickable-icon" onclick="closeModal()">
+  <svg>...</svg>
+</div>
+```
+
+**Disabled semantics:** If a native button is unavailable, use `disabled`. Reserve `aria-disabled="true"` for custom controls or temporarily unavailable controls that you intentionally keep discoverable in the tab order, and block activation in JavaScript.
+
+**References:**
+- [W3C: Understanding SC 2.5.8 Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum) - 24x24 CSS px AA target size plus spacing exception
+- [W3C: Understanding SC 2.5.5 Target Size (Enhanced)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced) - 44x44 CSS px AAA target size
+- [W3C: Understanding SC 2.4.11 Focus Not Obscured (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum) - Sticky UI must not hide the focused control
+- [W3C: Understanding SC 1.4.4 Resize Text](https://www.w3.org/WAI/WCAG21/Understanding/resize-text) - 200% text resize expectations
+- [W3C: Understanding SC 1.4.10 Reflow](https://www.w3.org/WAI/WCAG21/Understanding/reflow) - 320 CSS px / 400% zoom guidance
+- [MDN: `<button>` accessibility](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Button) - Native semantics and accessible names
+- [MDN: HTML `title` accessibility concerns](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/title) - Why tooltip-only labels are unreliable
+- [MDN: `aria-disabled`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-disabled) - Native disabled versus ARIA disabled
+
 ### Motion and accessibility preferences
 
 **Why:** ~35% of users experience motion sensitivity, and WCAG 2.1 Level AA requires respecting `prefers-reduced-motion`. Failing this isn't just bad UX—it can trigger nausea, migraines, or seizures.
