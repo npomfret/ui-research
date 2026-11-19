@@ -1,3 +1,5 @@
 .gemini/.env
 
 node_modules
+.gitnexus/
+tmp/
